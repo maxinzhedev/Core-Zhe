@@ -523,8 +523,8 @@ function ZigZagCard({
   /* --- Architecture / SVG side (transparent, offset toward center) --- */
   const archSide = (
     <motion.div
-      className={`relative w-full lg:w-1/2 min-h-[280px] lg:min-h-[360px] flex items-center justify-center pointer-events-none ${
-        textOnLeft ? "-ml-4 lg:-ml-8" : "-mr-4 lg:-mr-8"
+      className={`relative w-full lg:w-1/2 hidden lg:flex min-h-[360px] items-center justify-center pointer-events-none ${
+        textOnLeft ? "-ml-8" : "-mr-8"
       }`}
       style={{ zIndex: 0 }}
       variants={textOnLeft ? rightVariants : leftVariants}
@@ -702,7 +702,7 @@ export default function CareerSection() {
     <section
       ref={sectionRef}
       id="career"
-      className="relative py-16 px-6 md:px-16 overflow-hidden"
+      className="relative py-10 md:py-16 px-4 md:px-16 overflow-hidden"
       onMouseMove={handleMouseMove}
     >
       <AuroraBackground mouseX={mouseX} mouseY={mouseY} />
@@ -714,7 +714,7 @@ export default function CareerSection() {
         transition={{ duration: 0.8 }}
       >
         {/* Section header */}
-        <div className="mb-16">
+        <div className="mb-10 md:mb-16">
           <p className="font-mono text-electric-blue/60 text-sm tracking-widest uppercase mb-3">
             03 / Career
           </p>
@@ -732,7 +732,7 @@ export default function CareerSection() {
           <CenterAxisLine activeIndex={activeCardIndex} totalCards={careers.length} />
 
           {/* Zig-Zag Cards */}
-          <div className="space-y-3 md:space-y-4">
+          <div className="space-y-3 lg:space-y-4">
             {mergedCareers.map((item, index) => (
               <ZigZagCard
                 key={`${item.company}-${item.period}`}
