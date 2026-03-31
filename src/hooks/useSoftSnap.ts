@@ -17,7 +17,7 @@ import { useEffect, useRef } from "react";
  */
 export function useSoftSnap() {
   const rafId = useRef<number>(0);
-  const timeout = useRef<ReturnType<typeof setTimeout>>();
+  const timeout = useRef<ReturnType<typeof setTimeout>>(undefined);
   const isSnapping = useRef(false);
   const isSmoothScrolling = useRef(false);
 
