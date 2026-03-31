@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
+import { useSiteConfig } from "./SiteConfigContext";
 
 const projects = [
   {
@@ -151,11 +152,13 @@ export default function BackstageSection() {
   const [openId, setOpenId] = useState<string | null>(null);
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const { config } = useSiteConfig();
 
   return (
     <section
       ref={sectionRef}
-      className="relative py-32 px-6 md:px-16 max-w-7xl mx-auto"
+      id="backstage"
+      className="relative py-16 px-6 md:px-16 max-w-7xl mx-auto"
     >
       <motion.div
         initial={{ opacity: 0 }}
@@ -165,7 +168,7 @@ export default function BackstageSection() {
         {/* Section header */}
         <div className="mb-16">
           <p className="font-mono text-slate-300 dark:text-white/30 text-sm tracking-widest uppercase mb-3">
-            07 / Backstage
+            08 / Backstage
           </p>
           <h2 className="text-4xl md:text-5xl font-extrabold tracking-tighter text-slate-800 dark:text-white">
             幕后逻辑
@@ -241,7 +244,7 @@ export default function BackstageSection() {
           Designed &amp; Built with obsessive attention to detail
         </p>
         <p className="text-xs font-mono text-slate-200 dark:text-white/10 mt-1">
-          &copy; 2024 马信哲 &middot; 知行合一
+          {config.footer.copyright}
         </p>
       </motion.div>
     </section>

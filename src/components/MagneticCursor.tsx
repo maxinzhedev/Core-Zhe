@@ -7,8 +7,14 @@ export default function MagneticCursor() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
+    // Disable custom cursor on touch devices
+    if (window.matchMedia("(pointer: coarse)").matches) {
+      setIsTouchDevice(true);
+      return;
+    }
     const handleMouseMove = (e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY });
       if (!isVisible) setIsVisible(true);
@@ -44,7 +50,7 @@ export default function MagneticCursor() {
     };
   }, [isVisible]);
 
-  if (!isVisible) return null;
+  if (!isVisible || isTouchDevice) return null;
 
   return (
     <>

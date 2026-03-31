@@ -1,10 +1,21 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useSiteConfig } from "./SiteConfigContext";
+import { useLanguage } from "./LanguageContext";
 
 export default function HeroSection() {
+  const { config } = useSiteConfig();
+  const { t } = useLanguage();
+  const hero = config.hero;
+
+  const tagTranslations: Record<string, string> = {
+    "解决问题，持续交付用户价值": "Solve problems, deliver user value",
+    "建立风控模型和流程体系": "Build risk control models and process systems",
+    "AI赋能组织提效业务变革": "AI-powered organizational efficiency",
+  };
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+    <section id="hero" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
       {/* Subtle radial glow behind name */}
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="w-[600px] h-[600px] rounded-full bg-electric-blue/[0.03] dark:bg-electric-blue/5 blur-[120px]" />
@@ -23,7 +34,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.5, delay: 0.2, ease: "easeOut" }}
         >
-          Maxwell Ma
+          {hero.name}
         </motion.h1>
 
         {/* Divider line */}
@@ -41,7 +52,7 @@ export default function HeroSection() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 1.0 }}
         >
-          AI赋能的平台产品经理
+          {t(hero.title, "AI-Empowered Platform Product Manager")}
         </motion.p>
 
         {/* Subtitle - 知行合一 */}
@@ -51,7 +62,7 @@ export default function HeroSection() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 1.3 }}
         >
-          知行合一
+          {t(hero.motto, "Unity of Knowledge and Action")}
         </motion.p>
 
         {/* Tags */}
@@ -61,17 +72,16 @@ export default function HeroSection() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 1.6 }}
         >
-          <span className="px-3 py-1 border border-slate-200 dark:border-white/10 rounded-full">
-            解决问题，持续交付用户价值
-          </span>
-          <span className="hidden md:inline text-slate-300 dark:text-white/20">·</span>
-          <span className="px-3 py-1 border border-slate-200 dark:border-white/10 rounded-full">
-            建立风控模型和流程体系
-          </span>
-          <span className="hidden md:inline text-slate-300 dark:text-white/20">·</span>
-          <span className="px-3 py-1 border border-slate-200 dark:border-white/10 rounded-full">
-            AI赋能组织提效业务变革
-          </span>
+          {hero.tags.map((tag, i) => (
+            <span key={i}>
+              {i > 0 && (
+                <span className="hidden md:inline text-slate-300 dark:text-white/20">·</span>
+              )}
+              <span className="px-3 py-1 border border-slate-200 dark:border-white/10 rounded-full">
+                {t(tag, tagTranslations[tag] || tag)}
+              </span>
+            </span>
+          ))}
         </motion.div>
       </motion.div>
 

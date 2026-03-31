@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { useSiteConfig } from "./SiteConfigContext";
 
 const capabilities = [
   {
@@ -119,9 +120,18 @@ function CapabilityCard({
 export default function CapabilitiesSection() {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const { config } = useSiteConfig();
+
+  // merge config metrics into the "核心数据" card
+  const mergedCapabilities = capabilities.map((cap) => {
+    if (cap.subtitle === "Key Metrics") {
+      return { ...cap, items: config.capabilities.metrics.map((m) => m.value) };
+    }
+    return cap;
+  });
 
   return (
-    <section className="relative py-32 px-6 md:px-16 max-w-7xl mx-auto">
+    <section id="capabilities" className="relative py-16 px-6 md:px-16 max-w-7xl mx-auto">
       <motion.div
         ref={sectionRef}
         initial={{ opacity: 0 }}
@@ -131,7 +141,7 @@ export default function CapabilitiesSection() {
         {/* Section header */}
         <div className="mb-16">
           <p className="font-mono text-electric-blue/60 text-sm tracking-widest uppercase mb-3">
-            05 / Capabilities
+            06 / Capabilities
           </p>
           <h2 className="text-4xl md:text-5xl font-extrabold tracking-tighter text-slate-800 dark:text-white">
             能力金字塔
@@ -143,7 +153,7 @@ export default function CapabilitiesSection() {
 
         {/* Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          {capabilities.map((item, index) => (
+          {mergedCapabilities.map((item, index) => (
             <CapabilityCard key={item.title} item={item} index={index} />
           ))}
         </div>

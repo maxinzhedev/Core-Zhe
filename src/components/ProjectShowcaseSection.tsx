@@ -1,7 +1,13 @@
 "use client";
 
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useState, useCallback } from "react";
+import dynamic from "next/dynamic";
+import { useSiteConfig } from "./SiteConfigContext";
+import { useLanguage } from "./LanguageContext";
+import { getEn } from "@/i18n/translations";
+
+const JourneyPlayer = dynamic(() => import("./JourneyPlayer"), { ssr: false });
 
 interface Project {
   id: string;
@@ -11,6 +17,9 @@ interface Project {
   tags: string[];
   demoLink: string;
   exploreLink: string;
+  repoLink: string;
+  docsLink: string;
+  hasDemoRecording?: boolean;
   icon: React.ReactNode;
 }
 
@@ -24,6 +33,9 @@ const projects: Project[] = [
     tags: ["渠道管理", "全生命周期", "风控引擎", "国际化"],
     demoLink: "#",
     exploreLink: "#",
+    repoLink: "#",
+    docsLink: "#",
+    hasDemoRecording: true,
     icon: (
       <svg viewBox="0 0 40 40" fill="none" className="w-10 h-10">
         <rect x="4" y="20" width="8" height="14" rx="1.5" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
@@ -45,6 +57,8 @@ const projects: Project[] = [
     tags: ["AI Agent", "工单系统", "知识库", "智能诊断"],
     demoLink: "#",
     exploreLink: "#",
+    repoLink: "#",
+    docsLink: "#",
     icon: (
       <svg viewBox="0 0 40 40" fill="none" className="w-10 h-10">
         <rect x="6" y="6" width="28" height="20" rx="3" stroke="currentColor" strokeWidth="1.5" />
@@ -78,11 +92,14 @@ function ProjectCard({
   project,
   index,
   isInView,
+  onDemoClick,
 }: {
   project: Project;
   index: number;
   isInView: boolean;
+  onDemoClick?: () => void;
 }) {
+  const { t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -97,6 +114,7 @@ function ProjectCard({
       }}
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
+      onClick={() => setIsOpen((prev) => !prev)}
     >
       {/* Main card */}
       <div className="project-card relative rounded-2xl p-8 md:p-10 overflow-hidden">
@@ -132,7 +150,7 @@ function ProjectCard({
                 {project.subtitle}
               </p>
               <h3 className="text-xl md:text-2xl font-bold text-slate-800 dark:text-white tracking-tight">
-                {project.title}
+                {t(project.title, getEn(project.title))}
               </h3>
             </div>
 
@@ -162,7 +180,7 @@ function ProjectCard({
 
           {/* Description */}
           <p className="mt-4 text-sm text-slate-500 dark:text-white/50 leading-relaxed">
-            {project.description}
+            {t(project.description, getEn(project.description))}
           </p>
 
           {/* Tags */}
@@ -174,7 +192,7 @@ function ProjectCard({
                   bg-slate-100 dark:bg-white/[0.04] text-slate-500 dark:text-white/40
                   border border-slate-200/60 dark:border-white/[0.08]"
               >
-                {tag}
+                {t(tag, getEn(tag))}
               </span>
             ))}
           </div>
@@ -194,12 +212,15 @@ function ProjectCard({
               <p className="text-[11px] font-mono text-slate-400 dark:text-white/30 uppercase tracking-widest mb-4">
                 Interactive Demo
               </p>
-              <div className="flex gap-3">
+              <div className="flex flex-wrap gap-3">
                 {/* 旅程演示 */}
-                <a
-                  href={project.demoLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (project.hasDemoRecording && onDemoClick) {
+                      onDemoClick();
+                    }
+                  }}
                   className="demo-btn-primary flex items-center gap-2.5 px-5 py-2.5 rounded-xl text-sm font-semibold
                     bg-electric-blue/10 text-electric-blue border border-electric-blue/20
                     hover:bg-electric-blue/20 hover:border-electric-blue/40
@@ -213,8 +234,8 @@ function ProjectCard({
                       strokeLinejoin="round"
                     />
                   </svg>
-                  旅程演示
-                </a>
+                  {t("旅程演示", "Demo Tour")}
+                </button>
 
                 {/* 自由探索 */}
                 <a
@@ -236,7 +257,67 @@ function ProjectCard({
                       strokeLinecap="round"
                     />
                   </svg>
-                  自由探索
+                  {t("自由探索", "Free Explore")}
+                </a>
+
+                {/* 代码仓库 */}
+                <a
+                  href={project.repoLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2.5 px-5 py-2.5 rounded-xl text-sm font-medium
+                    bg-slate-100/80 dark:bg-white/[0.04] text-slate-600 dark:text-white/50
+                    border border-slate-200/60 dark:border-white/[0.08]
+                    hover:bg-slate-200/60 dark:hover:bg-white/[0.08] hover:text-slate-800 dark:hover:text-white/70
+                    transition-all duration-300"
+                >
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path
+                      d="M8 1C4.13 1 1 4.13 1 8C1 11.1 3.01 13.71 5.78 14.67C6.13 14.73 6.25 14.52 6.25 14.34V13.03C4.29 13.47 3.88 12.13 3.88 12.13C3.56 11.31 3.1 11.1 3.1 11.1C2.45 10.66 3.15 10.67 3.15 10.67C3.87 10.72 4.25 11.41 4.25 11.41C4.89 12.54 5.88 12.22 6.28 12.05C6.34 11.58 6.53 11.26 6.74 11.08C5.17 10.9 3.52 10.28 3.52 7.68C3.52 6.91 3.79 6.28 4.26 5.79C4.19 5.61 3.96 4.89 4.33 3.93C4.33 3.93 4.93 3.73 6.24 4.63C6.82 4.47 7.42 4.39 8.02 4.39C8.62 4.39 9.22 4.47 9.8 4.63C11.11 3.73 11.71 3.93 11.71 3.93C12.08 4.89 11.85 5.61 11.78 5.79C12.26 6.28 12.52 6.91 12.52 7.68C12.52 10.29 10.86 10.9 9.29 11.07C9.55 11.29 9.78 11.73 9.78 12.4V14.34C9.78 14.53 9.9 14.74 10.26 14.67C13 13.7 15 11.1 15 8C15 4.13 11.87 1 8 1Z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                  {t("代码仓库", "Repository")}
+                </a>
+
+                {/* 产品文档 */}
+                <a
+                  href={project.docsLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2.5 px-5 py-2.5 rounded-xl text-sm font-medium
+                    bg-slate-100/80 dark:bg-white/[0.04] text-slate-600 dark:text-white/50
+                    border border-slate-200/60 dark:border-white/[0.08]
+                    hover:bg-slate-200/60 dark:hover:bg-white/[0.08] hover:text-slate-800 dark:hover:text-white/70
+                    transition-all duration-300"
+                >
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path
+                      d="M3 2H10L13 5V14H3V2Z"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M10 2V5H13"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M5.5 8H10.5"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                    />
+                    <path
+                      d="M5.5 10.5H9"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  {t("产品文档", "Documentation")}
                 </a>
               </div>
             </motion.div>
@@ -251,40 +332,72 @@ function ProjectCard({
 export default function ProjectShowcaseSection() {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const [showDemo, setShowDemo] = useState(false);
+  const { t } = useLanguage();
+  const { config } = useSiteConfig();
+
+  const handleOpenDemo = useCallback(() => setShowDemo(true), []);
+  const handleCloseDemo = useCallback(() => setShowDemo(false), []);
+
+  // merge config data onto static project definitions (icons stay hardcoded)
+  const mergedProjects = projects.map((p, i) => {
+    const cfg = config.projects[i];
+    if (!cfg) return p;
+    return {
+      ...p,
+      title: cfg.title,
+      subtitle: cfg.subtitle,
+      description: cfg.description,
+      tags: cfg.tags,
+      demoLink: cfg.demoLink,
+      exploreLink: cfg.exploreLink,
+      repoLink: cfg.repoLink,
+      docsLink: cfg.docsLink,
+      hasDemoRecording: cfg.hasDemoRecording,
+    };
+  });
 
   return (
-    <section className="relative py-32 px-6 md:px-16 max-w-7xl mx-auto">
-      <motion.div
-        ref={sectionRef}
-        initial={{ opacity: 0 }}
-        animate={isInView ? { opacity: 1 } : {}}
-        transition={{ duration: 0.8 }}
-      >
-        {/* Section header */}
-        <div className="mb-16">
-          <p className="font-mono text-electric-blue/60 text-sm tracking-widest uppercase mb-3">
-            04 / Projects
-          </p>
-          <h2 className="text-4xl md:text-5xl font-extrabold tracking-tighter text-slate-800 dark:text-white">
-            项目复现
-          </h2>
-          <p className="mt-3 text-slate-400 dark:text-white/40 max-w-lg">
-            可交互的产品原型，还原真实业务场景与设计思路
-          </p>
-        </div>
+    <>
+      <section id="projects" className="relative py-16 px-6 md:px-16 max-w-7xl mx-auto">
+        <motion.div
+          ref={sectionRef}
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          {/* Section header */}
+          <div className="mb-16">
+            <p className="font-mono text-electric-blue/60 text-sm tracking-widest uppercase mb-3">
+              04 / Projects
+            </p>
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tighter text-slate-800 dark:text-white">
+              {t("项目复现", "Project Showcase")}
+            </h2>
+            <p className="mt-3 text-slate-400 dark:text-white/40 max-w-lg">
+              {t("可交互的产品原型，还原真实业务场景与设计思路", "Interactive prototypes recreating real business scenarios and design thinking")}
+            </p>
+          </div>
 
-        {/* Project cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {projects.map((project, index) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              index={index}
-              isInView={isInView}
-            />
-          ))}
-        </div>
-      </motion.div>
-    </section>
+          {/* Project cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {mergedProjects.map((project, index) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                index={index}
+                isInView={isInView}
+                onDemoClick={project.hasDemoRecording ? handleOpenDemo : undefined}
+              />
+            ))}
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Fullscreen journey player overlay */}
+      <AnimatePresence>
+        {showDemo && <JourneyPlayer onClose={handleCloseDemo} />}
+      </AnimatePresence>
+    </>
   );
 }

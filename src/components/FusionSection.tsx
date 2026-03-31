@@ -96,7 +96,8 @@ export default function FusionSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative py-32 px-6 md:px-16 max-w-7xl mx-auto"
+      id="fusion"
+      className="relative py-16 px-6 md:px-16 max-w-7xl mx-auto"
     >
       {/* Section header */}
       <motion.div
@@ -106,7 +107,7 @@ export default function FusionSection() {
         className="mb-16"
       >
         <p className="font-mono text-gem-green/60 text-sm tracking-widest uppercase mb-3">
-          06 / Fusion
+          07 / Fusion
         </p>
         <h2 className="text-4xl md:text-5xl font-extrabold tracking-tighter text-slate-800 dark:text-white">
           核心聚变

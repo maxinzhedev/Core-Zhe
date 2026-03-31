@@ -3,6 +3,9 @@
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
 import Image from "next/image";
+import { useSiteConfig } from "./SiteConfigContext";
+import { useLanguage } from "./LanguageContext";
+import { getEn } from "@/i18n/translations";
 
 interface Course {
   name: string;
@@ -110,6 +113,84 @@ const education: Education[] = [
   },
 ];
 
+interface MinorItem {
+  name: string;
+  desc: string;
+  logo: string;
+}
+
+interface MinorCategory {
+  label: string;
+  color: string;
+  items: MinorItem[];
+}
+
+const minorCategories: MinorCategory[] = [
+  {
+    label: "企业级平台",
+    color: "electric-blue",
+    items: [
+      {
+        name: "Salesforce & Agentforce",
+        desc: "全球领先的 CRM 及 AI Agent 平台，覆盖销售云、服务云、营销云及 Agentforce 自主 AI 智能体，赋能企业数字化转型与智能化运营。",
+        logo: "/pic/salesforce.svg",
+      },
+      {
+        name: "SAP",
+        desc: "全球领先的企业管理软件，涵盖 ERP、S/4HANA、BTP 等，支撑大型企业财务、供应链、人力资源等核心业务流程。",
+        logo: "/pic/sap.svg",
+      },
+      {
+        name: "Power Platform",
+        desc: "微软低代码/无代码平台生态，包括 Power Apps、Power Automate、Power BI 和 Copilot Studio，快速构建业务应用与自动化工作流。",
+        logo: "/pic/powerplatform.svg",
+      },
+    ],
+  },
+  {
+    label: "管理与商科",
+    color: "gem-green",
+    items: [
+      {
+        name: "PMP 项目管理",
+        desc: "项目管理专业人士认证体系，涵盖项目启动、规划、执行、监控与收尾全生命周期，强调敏捷与预测混合方法论。",
+        logo: "/pic/pmp.svg",
+      },
+      {
+        name: "经济师",
+        desc: "经济专业技术资格，系统学习宏微观经济学、产业经济、金融市场与财政税收，提升商业分析与决策能力。",
+        logo: "/pic/economics.svg",
+      },
+      {
+        name: "会计学 & 工商管理",
+        desc: "掌握财务报表分析、成本核算、管理会计及企业战略管理、市场营销、组织行为学等商科核心知识体系。",
+        logo: "/pic/economics.svg",
+      },
+    ],
+  },
+  {
+    label: "前沿技术",
+    color: "electric-blue",
+    items: [
+      {
+        name: "AI Agent",
+        desc: "自主智能体技术，涵盖 LLM 驱动的 Agent 架构、RAG 检索增强、多 Agent 协作、Tool Use 及 Workflow 编排等前沿领域。",
+        logo: "/pic/ai-agent.svg",
+      },
+      {
+        name: "Harness Engineering",
+        desc: "现代 DevOps 与持续交付平台，覆盖 CI/CD 流水线、特征标志、云成本管理及混沌工程，实现高效可靠的软件交付。",
+        logo: "/pic/harness.svg",
+      },
+      {
+        name: "低代码平台",
+        desc: "元数据驱动的应用构建范式，通过可视化建模、声明式配置和自动化代码生成，大幅提升业务应用交付效率。",
+        logo: "/pic/lowcode.svg",
+      },
+    ],
+  },
+];
+
 const experiences = [
   { icon: "/pic/三星电子.png", text: "三星中国研究院实习" },
   { icon: "/pic/中科院.png", text: "中科院客座学生" },
@@ -132,6 +213,7 @@ function Badge211() {
 /* ---- Course Pill ---- */
 function CoursePill({ course }: { course: Course }) {
   const [open, setOpen] = useState(false);
+  const { t } = useLanguage();
 
   return (
     <div className="relative">
@@ -149,7 +231,7 @@ function CoursePill({ course }: { course: Course }) {
           border hover:bg-electric-blue/10 hover:text-electric-blue hover:border-electric-blue/25
         `}
       >
-        {course.name}
+        {t(course.name, getEn(course.name))}
       </button>
 
       <AnimatePresence>
@@ -166,10 +248,10 @@ function CoursePill({ course }: { course: Course }) {
             onMouseLeave={() => setOpen(false)}
           >
             <p className="text-xs font-bold text-slate-700 dark:text-white/80 mb-1">
-              {course.name}
+              {t(course.name, getEn(course.name))}
             </p>
             <p className="text-[11px] leading-relaxed text-slate-500 dark:text-white/50">
-              {course.desc}
+              {t(course.desc, getEn(course.desc))}
             </p>
           </motion.div>
         )}
@@ -188,6 +270,8 @@ function EducationCard({
   index: number;
   isInView: boolean;
 }) {
+  const { t } = useLanguage();
+
   return (
     <motion.div
       className="glow-border rounded-2xl p-6 md:p-8 backdrop-blur-sm"
@@ -214,7 +298,7 @@ function EducationCard({
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1 flex-wrap">
             <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-electric-blue/10 text-electric-blue border border-electric-blue/20">
-              {item.degree}
+              {t(item.degree, getEn(item.degree))}
             </span>
             <Badge211 />
             <span className="text-xs font-mono text-slate-400 dark:text-white/30">
@@ -222,12 +306,12 @@ function EducationCard({
             </span>
           </div>
           <h3 className="text-lg font-bold text-slate-800 dark:text-white tracking-tight">
-            {item.school}
+            {t(item.school, getEn(item.school))}
           </h3>
           <p className="text-sm text-slate-500 dark:text-white/50 mt-0.5">
-            {item.major}
+            {t(item.major, getEn(item.major))}
             <span className="text-slate-300 dark:text-white/20 mx-1.5">|</span>
-            <span className="text-slate-400 dark:text-white/40">{item.type}</span>
+            <span className="text-slate-400 dark:text-white/40">{t(item.type, getEn(item.type))}</span>
           </p>
         </div>
       </div>
@@ -247,13 +331,89 @@ function EducationCard({
   );
 }
 
+/* ---- Minor Item Card ---- */
+function MinorItemCard({ item }: { item: MinorItem }) {
+  const [open, setOpen] = useState(false);
+  const { t } = useLanguage();
+
+  return (
+    <div className="relative group">
+      <button
+        onClick={() => setOpen(!open)}
+        onMouseEnter={() => setOpen(true)}
+        onMouseLeave={() => setOpen(false)}
+        className="flex items-center gap-2.5 px-3 py-2 rounded-xl border transition-all duration-200
+          bg-white/60 dark:bg-white/[0.04] border-slate-200/60 dark:border-white/[0.08]
+          hover:bg-electric-blue/5 hover:border-electric-blue/20 hover:shadow-sm
+          dark:hover:bg-electric-blue/10 dark:hover:border-electric-blue/30
+          w-full text-left"
+      >
+        <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-white dark:bg-white/10 border border-slate-100 dark:border-white/5 flex items-center justify-center overflow-hidden p-0.5">
+          <Image
+            src={item.logo}
+            alt={item.name}
+            width={22}
+            height={22}
+            className="object-contain"
+          />
+        </div>
+        <span className="text-xs font-medium text-slate-700 dark:text-white/70 truncate">
+          {t(item.name, getEn(item.name))}
+        </span>
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: 4, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 4, scale: 0.97 }}
+            transition={{ duration: 0.15 }}
+            className="absolute z-50 left-0 top-full mt-1.5 w-64 md:w-72 p-3 rounded-xl
+              bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10
+              shadow-lg dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
+            onMouseEnter={() => setOpen(true)}
+            onMouseLeave={() => setOpen(false)}
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-6 h-6 rounded-md bg-white dark:bg-white/10 border border-slate-100 dark:border-white/5 flex items-center justify-center overflow-hidden p-0.5">
+                <Image
+                  src={item.logo}
+                  alt={item.name}
+                  width={20}
+                  height={20}
+                  className="object-contain"
+                />
+              </div>
+              <p className="text-xs font-bold text-slate-700 dark:text-white/80">
+                {t(item.name, getEn(item.name))}
+              </p>
+            </div>
+            <p className="text-[11px] leading-relaxed text-slate-500 dark:text-white/50">
+              {t(item.desc, getEn(item.desc))}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 /* ---- Section ---- */
 export default function EducationSection() {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const { config } = useSiteConfig();
+  const { t } = useLanguage();
+
+  const mergedEducation = education.map((e, i) => {
+    const cfg = config.education[i];
+    if (!cfg) return e;
+    return { ...e, school: cfg.school, major: cfg.major, type: cfg.type, period: cfg.period, logo: cfg.logo };
+  });
 
   return (
-    <section className="relative py-32 px-6 md:px-16 max-w-7xl mx-auto">
+    <section id="education" className="relative py-16 px-6 md:px-16 max-w-7xl mx-auto">
       <motion.div
         ref={sectionRef}
         initial={{ opacity: 0 }}
@@ -266,16 +426,16 @@ export default function EducationSection() {
             02 / Education
           </p>
           <h2 className="text-4xl md:text-5xl font-extrabold tracking-tighter text-slate-800 dark:text-white">
-            学习经历
+            {t("学习经历", "Education")}
           </h2>
           <p className="mt-3 text-slate-400 dark:text-white/40 max-w-lg">
-            从物联网工程到软件工程，构建跨学科技术基底
+            {t("从物联网工程到软件工程，构建跨学科技术基底", "From IoT to Software Engineering — an interdisciplinary technical foundation")}
           </p>
         </div>
 
         {/* Degree cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
-          {education.map((item, index) => (
+          {mergedEducation.map((item, index) => (
             <EducationCard
               key={item.school}
               item={item}
@@ -310,7 +470,7 @@ export default function EducationSection() {
                   />
                 </div>
                 <span className="text-sm font-medium text-slate-700 dark:text-white/70">
-                  {item.text}
+                  {t(item.text, getEn(item.text))}
                 </span>
               </div>
             </motion.div>
@@ -332,12 +492,55 @@ export default function EducationSection() {
                   key={h}
                   className="text-xs font-mono px-2.5 py-1 rounded-full bg-gem-green/10 text-gem-green border border-gem-green/20"
                 >
-                  {h}
+                  {t(h, getEn(h))}
                 </span>
               ))}
             </div>
           </motion.div>
         </div>
+
+        {/* 职业辅修 */}
+        <motion.div
+          className="glow-border rounded-2xl p-6 md:p-8 backdrop-blur-sm mt-5"
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{
+            duration: 0.6,
+            delay: 0.5,
+            ease: [0.25, 0.46, 0.45, 0.94],
+          }}
+        >
+          <div className="flex items-center gap-3 mb-5">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-electric-blue/20 to-gem-green/20 flex items-center justify-center">
+              <svg viewBox="0 0 20 20" className="w-4 h-4 text-electric-blue fill-current">
+                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.547l1.606.688a3 3 0 002.364 0l1.606-.688v3.547a9.026 9.026 0 00-2.3 1.638z" />
+              </svg>
+            </div>
+            <div>
+              <h3 className="text-base font-bold text-slate-800 dark:text-white tracking-tight">
+                {t("职业辅修", "Professional Minor")}
+              </h3>
+              <p className="text-[11px] text-slate-400 dark:text-white/40 mt-0.5">
+                {t("Professional Minor — 持续学习，构建复合型知识体系", "Professional Minor — Continuous learning, building interdisciplinary expertise")}
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {minorCategories.map((category) => (
+              <div key={category.label}>
+                <p className={`text-[11px] font-mono uppercase tracking-widest mb-3 ${category.color === "gem-green" ? "text-gem-green/60" : "text-electric-blue/60"}`}>
+                  {t(category.label, getEn(category.label))}
+                </p>
+                <div className="flex flex-col gap-2">
+                  {category.items.map((item) => (
+                    <MinorItemCard key={item.name} item={item} />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
       </motion.div>
     </section>
   );
