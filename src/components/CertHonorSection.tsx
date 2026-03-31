@@ -31,7 +31,7 @@ const certData: CertItem[] = [
     year: "2021",
     description:
       "华为最高级别个人荣誉奖项，授予在业务突破中做出卓越贡献的个人。表彰在重大项目中的战略洞察与端到端交付能力。",
-    file: "/pic/cert&honor/马信哲-华为集团-总裁奖.pdf",
+    file: "/pic/cert-honor/马信哲-华为集团-总裁奖.pdf",
     thumbnail: "/pic/cert-thumbs/马信哲-华为集团-总裁奖.pdf.png",
     fileType: "pdf",
     category: "honor",
@@ -44,7 +44,7 @@ const certData: CertItem[] = [
     year: "2020",
     description:
       "华为云高级认证，验证在云服务解决方案设计、迁移策略及混合云架构方面的专业能力。",
-    file: "/pic/cert&honor/马信哲-华为技术认证-云服务解决方案架构HCIP-.pdf",
+    file: "/pic/cert-honor/马信哲-华为技术认证-云服务解决方案架构HCIP-.pdf",
     thumbnail:
       "/pic/cert-thumbs/马信哲-华为技术认证-云服务解决方案架构HCIP-.pdf.png",
     fileType: "pdf",
@@ -57,8 +57,8 @@ const certData: CertItem[] = [
     year: "2023",
     description:
       "阿里云专业级数据分析认证，涵盖大数据处理、数据仓库设计、BI 可视化及数据驱动决策全链路能力。",
-    file: "/pic/cert&honor/马信哲-阿里云ACP数据分析师证书.png",
-    thumbnail: "/pic/cert&honor/马信哲-阿里云ACP数据分析师证书.png",
+    file: "/pic/cert-honor/马信哲-阿里云ACP数据分析师证书.png",
+    thumbnail: "/pic/cert-honor/马信哲-阿里云ACP数据分析师证书.png",
     fileType: "png",
     category: "cloud",
   },
@@ -69,8 +69,8 @@ const certData: CertItem[] = [
     year: "2019",
     description:
       "华为高级视频会议认证，掌握企业级视频会议系统的规划、部署与运维能力。",
-    file: "/pic/cert&honor/马信哲-华为技术认证-视频会议-HCIP .pdf",
-    thumbnail: "/pic/cert-thumbs/马信哲-华为技术认证-视频会议-HCIP .pdf.png",
+    file: "/pic/cert-honor/马信哲-华为技术认证-视频会议-HCIP.pdf",
+    thumbnail: "/pic/cert-thumbs/马信哲-华为技术认证-视频会议-HCIP.pdf.png",
     fileType: "pdf",
     category: "network",
   },
@@ -81,8 +81,8 @@ const certData: CertItem[] = [
     year: "2019",
     description:
       "系统掌握企业 ICT 基础架构的规划、设计与演进策略，涵盖数据中心、网络及安全体系建设。",
-    file: "/pic/cert&honor/马信哲-华为大学-企业ICT建构与发展认证.png",
-    thumbnail: "/pic/cert&honor/马信哲-华为大学-企业ICT建构与发展认证.png",
+    file: "/pic/cert-honor/马信哲-华为大学-企业ICT建构与发展认证.png",
+    thumbnail: "/pic/cert-honor/马信哲-华为大学-企业ICT建构与发展认证.png",
     fileType: "png",
     category: "ecosystem",
   },
@@ -93,8 +93,8 @@ const certData: CertItem[] = [
     year: "2019",
     description:
       "华为生态伙伴合作体系认证，理解华为渠道策略、合作伙伴赋能模式与生态共赢方法论。",
-    file: "/pic/cert&honor/马信哲-华为大学-生态合作认证.png",
-    thumbnail: "/pic/cert&honor/马信哲-华为大学-生态合作认证.png",
+    file: "/pic/cert-honor/马信哲-华为大学-生态合作认证.png",
+    thumbnail: "/pic/cert-honor/马信哲-华为大学-生态合作认证.png",
     fileType: "png",
     category: "ecosystem",
   },
