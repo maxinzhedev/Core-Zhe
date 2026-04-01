@@ -5,11 +5,14 @@
 
 const zh2en: Record<string, string> = {
   /* ── Hero ── */
-  "AI赋能的平台产品经理": "AI-Empowered Platform Product Manager",
+  "AI时代的平台产品专家": "Platform Product Expert in the AI Era",
   "知行合一": "Unity of Knowledge and Action",
-  "解决问题，持续交付用户价值": "Solve problems, deliver user value",
-  "建立风控模型和流程体系": "Build risk control models & process systems",
-  "AI赋能组织提效业务变革": "AI-powered organizational efficiency",
+  "全局解题": "Holistic Problem-Solving",
+  "从单点问题突破，到持续交付系统级的商业价值。": "From point breakthroughs to delivering systemic business value.",
+  "秩序构建": "Order Architecture",
+  "以严谨的风控模型与流程体系，筑牢业务的安全边界。": "Building secure business boundaries with rigorous risk models and process systems.",
+  "智能跃迁": "Intelligent Leap",
+  "将AI深度融入组织肌理，引领业务范式的效率变革。": "Deeply embedding AI into organizational fabric to drive paradigm-shifting efficiency.",
 
   /* ── Education Section ── */
   "学习经历": "Education",
@@ -107,6 +110,10 @@ const zh2en: Record<string, string> = {
     "Metadata-driven app development — visual modeling, declarative config and automated code generation.",
   // Experiences & honors
   "三星中国研究院实习": "Samsung China R&D Center Intern",
+  "赛格威机器人实习": "Segway Robotics Intern",
+  "艺龙旅行网实习": "eLong Travel Intern",
+  "实习经历": "Internship Experience",
+  "校园荣誉": "Campus Honors",
   "中科院客座学生": "CAS Visiting Student",
   "班长": "Class President",
   "优秀学生干部奖": "Outstanding Student Leader",
@@ -246,9 +253,26 @@ const zh2en: Record<string, string> = {
   "个月": "mos",
   "驻海外工作": "Overseas Work",
   "海外业务经验": "Int'l Business",
+  "负责海外业务片区": "Business Regions",
+  "罗马尼亚": "Romania",
+  "印尼": "Indonesia",
+  "新加坡": "Singapore",
+  "中东": "Middle East",
+  "东南亚": "Southeast Asia",
+  "中国": "China",
+  "↔ 拖动旋转地球仪": "↔ Drag to rotate",
+  "个": "",
   "英语能力": "English",
   "全流程多岗位": "Multi-Role Pipeline",
   "深入理解产品从 0 到 1 的完整链路": "Deep understanding of the full 0-to-1 product pipeline",
+  "覆盖企业数字化产品的完整视角": "Full-spectrum perspective across enterprise digital products",
+  "需求洞察": "Demand Insight",
+  "商业闭环": "Business Loop",
+  "产品定义": "Product Definition",
+  "全生命周期管理": "Full Lifecycle Mgmt",
+  "技术实现": "Tech Implementation",
+  "代码到架构": "Code to Architecture",
+  "赋能支撑": "SUPPORTING",
   "AI 时代就绪": "AI-Era Ready",
   "为应对新角色定位和挑战做好准备": "Prepared for new role definitions and challenges in the AI era",
   "国际化多元视野": "Global Perspective",
@@ -298,15 +322,18 @@ const zh2en: Record<string, string> = {
   "方法论": "Methodology",
   "经验沉淀为方法，方法驱动下一场实践":
     "Experience crystallizes into methodology; methodology drives the next practice",
-  "设计的前提是充分沟通和调研": "Design starts with thorough communication and research",
-  "用简单的界面，解构复杂的业务": "Simple interfaces deconstructing complex business",
-  "流程要有自驱性，也要有健壮性": "Processes need both self-drive and resilience",
-  "面对长流程、跨部门的系统设计，要充分了解各个部门、各个角色的个人诉求和组织诉求。在阿里云分销系统构建中，只有系统给每个角色都提供了价值，系统才可以推广出去，才能真正用起来。当阻力较大时，局部培养志愿者和标杆团队，再口碑推广是一个很好的办法。":
-    "For long-workflow, cross-department system design, you must understand each department and role's needs. At Alibaba Cloud's distribution system, only when the system provided value to every role could it be adopted. When resistance was high, cultivating champions and benchmark teams for grassroots promotion proved effective.",
-  "B端页面要清晰易用，逻辑清晰，板块分明。但在流程上要承载住复杂的业务。在阿里云分销系统构建中，坚持要点提前、风险点强调、变化点可追溯的设计原则。珍惜重视用户的注意力和焦点，有的放矢。":
-    "B2B pages should be clean, logical and well-structured while supporting complex workflows. At Alibaba Cloud, we upheld principles: key points first, risk highlights, and traceable changes. Respecting users' attention is paramount.",
-  "自驱型就是流程要有关心他的人，推动流程审批。无论是主动的还是被动的，需要进行合理的编排。流程在驳回时，要尽量保留可以复用的信息。如果所有流程因为一个节点被驳回就要从头再来，损失的不但是组织的效率、客户的体验，也是用户的积极性。":
-    "Self-driven processes need someone who cares to push approvals. Orchestration matters — active or passive. When rejected, reusable data should be preserved. If every rejection means starting over, the loss is not just organizational efficiency but also user motivation.",
+  "战略与优先级：需求繁杂，但好钢必须用在刀刃上": "Strategy & Prioritization: Focus Resources on What Truly Matters",
+  "组织与变革：超越单纯的功能交付，用\u201c利益对齐\u201d化解落地阻力": "Organization & Change: Beyond Feature Delivery \u2014 Resolve Resistance Through Interest Alignment",
+  "架构与降维：以克制的信息架构，为极度复杂的业务进行\u201c认知降维\u201d": "Architecture & Simplification: Restrained IA for Cognitive Load Reduction",
+  "机制与演进：流程设计要兼顾\u201c正向价值驱动\u201d与\u201c高阶容错弹性\u201d": "Mechanism & Evolution: Balancing Value-Driven Flow with Resilient Fault Tolerance",
+  "在资源、人力和时间高度受限的项目中，**B端产品经理的核心价值在于管理不确定性**。面对模糊且海量的诉求，我主张以 **MVP（最小可行性产品）** 快速切入，寻找各方利益的\u201c最大公约数\u201d来驱动项目敏捷演进。在宏观统筹的同时，以点带面，层层剥离表象，**挖掘出业务参与者最底层的真实诉求**，以数据和严密的逻辑推动项目的整体完善。":
+    "In projects with highly constrained resources, manpower and time, **the core value of a B2B PM lies in managing uncertainty**. Facing ambiguous and overwhelming demands, I advocate cutting in fast with **MVP (Minimum Viable Product)**, finding the \u201cgreatest common denominator\u201d of all stakeholders to drive agile evolution. While coordinating the big picture, I peel back layers to **uncover the deepest real needs of business participants**, driving holistic improvement through data and rigorous logic.",
+  "**B端系统的上线，本质上是一场组织管理变革。** 面对长流程、跨部门的复杂系统设计，核心不在于画出多完美的流程图，而在于**敏锐捕捉各部门、各角色的个人诉求与组织诉求**。在构建复杂系统（如阿里云分销系统）时，唯有系统能为链条上的每一个角色提供可感知的价值，系统才能真正\u201c长\u201d在业务上。当面临较大的惯性阻力时，采用**\u201c局部培养志愿者和标杆团队、以点带面形成口碑\u201d**的策略，往往比强行推行更具穿透力。":
+    "**Launching a B2B system is essentially an organizational management transformation.** For complex cross-departmental system design, the key isn\u2019t drawing perfect flowcharts \u2014 it\u2019s **keenly capturing each department\u2019s and role\u2019s personal and organizational needs**. When building complex systems (e.g., Alibaba Cloud\u2019s distribution system), only when the system provides perceivable value to every role in the chain can it truly take root. When facing strong inertia, **\u201ccultivating local champions and benchmark teams to build grassroots reputation\u201d** often penetrates deeper than forced rollouts.",
+  "B端业务往往天然复杂，**产品经理的价值在于用确定性的系统框架去解构不确定性的业务**。界面的清晰易用，背后是深厚的业务抽象能力。在复杂系统的构建中，应坚持**\u201c要点前置、风险强控、变更可溯\u201d**的设计原则。我们不仅要珍惜用户的物理点击，更要**珍惜用户的注意力与认知带宽**。通过合理的信息分层和架构编排，让用户在处理复杂业务时依然能聚焦核心，有的放矢。":
+    "B2B business is inherently complex. **A PM\u2019s value lies in using deterministic system frameworks to deconstruct uncertain business**. Clean, usable interfaces reflect deep business abstraction skills. In complex systems, uphold the principles of **\u201ckey points first, risk tightly controlled, changes traceable\u201d**. We must cherish not just users\u2019 physical clicks, but more importantly, **their attention and cognitive bandwidth**. Through proper information layering, users can stay focused on what matters even when handling complex workflows.",
+  "优秀的B端流程不应是死板的行政枷锁，而应具备**自驱性和鲁棒性（健壮性）**。自驱性意味着流程设计要能给推进者提供正向反馈或明确的责任锚定，让流程\u201c自己跑起来\u201d；鲁棒性则体现在对异常和挫折的处理上。如果一个长流程因为末端的一个节点被驳回就必须从头再来，这不仅是对组织效率和客户体验的巨大损耗，更是在扼杀用户对系统的信任感。**流程应当具备\u201c状态保留\u201d和\u201c断点续传\u201d的弹性**，在严谨与效率之间找到最佳平衡。":
+    "Excellent B2B workflows should not be rigid administrative shackles but possess **self-driving capability and robustness**. Self-driving means the design provides positive feedback or clear accountability anchoring, letting the process \u201crun itself\u201d. Robustness shows in handling exceptions \u2014 if a long workflow must restart from scratch because one endpoint node is rejected, this devastates not only organizational efficiency and customer experience but erodes user trust. **Workflows should have \u201cstate preservation\u201d and \u201ccheckpoint resume\u201d resilience**, finding the optimal balance between rigor and efficiency.",
   "沟通": "Communication",
   "调研": "Research",
   "共识": "Consensus",
@@ -319,9 +346,6 @@ const zh2en: Record<string, string> = {
   "编排": "Orchestration",
   "容错": "Fault Tolerance",
   "复用": "Reuse",
-  "需求会很多，但好钢要用在刀刃上": "Demands are many, but sharpen the blade where it counts",
-  "要在资源有限、人力有限、时间有限的项目中，面对可能模糊的需求，探索MVP，以各方的最大公约数驱动项目演进。在宏观协调的同时，以点带面，挖掘业务和业务参与者层层掩盖下的最真实的需求。以数据和逻辑推动项目的整体完善。":
-    "In projects with limited resources, manpower and time, explore the MVP amid ambiguous requirements. Drive evolution through the greatest common denominator of all stakeholders. While coordinating the big picture, dig beneath layers of business processes and participants to uncover the truest needs. Let data and logic drive holistic improvement.",
   "MVP": "MVP",
   "数据驱动": "Data-Driven",
   "最大公约数": "Common Ground",

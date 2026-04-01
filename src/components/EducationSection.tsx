@@ -191,8 +191,13 @@ const minorCategories: MinorCategory[] = [
   },
 ];
 
-const experiences = [
+const internships = [
   { icon: "/pic/三星电子.png", text: "三星中国研究院实习" },
+  { icon: "/pic/segway.svg", text: "赛格威机器人实习" },
+  { icon: "/pic/elong.svg", text: "艺龙旅行网实习" },
+];
+
+const experiences = [
   { icon: "/pic/中科院.png", text: "中科院客座学生" },
 ];
 
@@ -445,8 +450,60 @@ export default function EducationSection() {
           ))}
         </div>
 
+        {/* Internship Experience */}
+        <motion.div
+          className="glow-border rounded-2xl p-5 md:p-6 backdrop-blur-sm mb-5"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{
+            duration: 0.6,
+            delay: 0.3,
+            ease: [0.25, 0.46, 0.45, 0.94],
+          }}
+        >
+          <div className="flex items-center gap-2 mb-4">
+            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-violet-500/20 to-purple-400/20 flex items-center justify-center">
+              <svg viewBox="0 0 20 20" className="w-3.5 h-3.5 text-violet-500 fill-current">
+                <path d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.28a1 1 0 01-.684.948l-4.493 1.498a1 1 0 01-.632 0L8.184 12.23A1 1 0 017.5 11.28V8a2 2 0 012-2h1V5a1 1 0 00-1-1H9a1 1 0 00-1 1v1H6zM2 13.28V8a4 4 0 014-4h8a4 4 0 014 4v5.28a3 3 0 01-2.052 2.846l-4.493 1.498a3 3 0 01-1.91 0l-4.494-1.498A3 3 0 012 13.28z" />
+              </svg>
+            </div>
+            <h3 className="text-sm font-bold text-slate-700 dark:text-white/80 tracking-tight">
+              {t("实习经历", "Internship Experience")}
+            </h3>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {internships.map((item, index) => (
+              <motion.div
+                key={item.text}
+                className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-white/[0.03] border border-slate-100 dark:border-white/[0.06] hover:border-violet-300/40 dark:hover:border-violet-400/20 transition-colors duration-300"
+                initial={{ opacity: 0, x: -10 }}
+                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.4 + index * 0.08,
+                  ease: [0.25, 0.46, 0.45, 0.94],
+                }}
+              >
+                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-white dark:bg-white/10 border border-slate-100 dark:border-white/5 flex items-center justify-center overflow-hidden p-1">
+                  <Image
+                    src={item.icon}
+                    alt={item.text}
+                    width={24}
+                    height={24}
+                    className="object-contain"
+                  />
+                </div>
+                <span className="text-[13px] font-medium text-slate-600 dark:text-white/60">
+                  {t(item.text, getEn(item.text))}
+                </span>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
         {/* Experience & Honors row */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {/* Research experience */}
           {experiences.map((item, index) => (
             <motion.div
               key={item.text}
@@ -455,7 +512,7 @@ export default function EducationSection() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{
                 duration: 0.6,
-                delay: 0.3 + index * 0.1,
+                delay: 0.5 + index * 0.1,
                 ease: [0.25, 0.46, 0.45, 0.94],
               }}
             >
@@ -476,16 +533,25 @@ export default function EducationSection() {
             </motion.div>
           ))}
 
+          {/* Honors & Tags */}
           <motion.div
             className="glow-border rounded-2xl p-5 backdrop-blur-sm"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{
               duration: 0.6,
-              delay: 0.5,
+              delay: 0.6,
               ease: [0.25, 0.46, 0.45, 0.94],
             }}
           >
+            <div className="flex items-center gap-2 mb-3">
+              <svg viewBox="0 0 20 20" className="w-4 h-4 text-gem-green fill-current">
+                <path fillRule="evenodd" d="M5 2a2 2 0 00-2 2v14l3.5-2 3.5 2 3.5-2 3.5 2V4a2 2 0 00-2-2H5zm2.5 3a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm6.207.293a1 1 0 00-1.414 0l-6 6a1 1 0 101.414 1.414l6-6a1 1 0 000-1.414zM12.5 10a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" clipRule="evenodd" />
+              </svg>
+              <span className="text-xs font-bold text-slate-600 dark:text-white/60 tracking-wide">
+                {t("校园荣誉", "Campus Honors")}
+              </span>
+            </div>
             <div className="flex items-center gap-2 flex-wrap">
               {honors.map((h) => (
                 <span

@@ -8,7 +8,7 @@ import {
   useSpring,
   type MotionValue,
 } from "framer-motion";
-import { useRef, useState, useCallback, useEffect } from "react";
+import { useRef, useCallback } from "react";
 import Image from "next/image";
 import { useSiteConfig } from "./SiteConfigContext";
 import { useLanguage } from "./LanguageContext";
@@ -163,8 +163,8 @@ function ArchStarnet() {
       <ellipse cx="200" cy="120" rx="80" ry="26" fill="none" stroke="currentColor" strokeWidth="0.5" opacity="0.25" />
       {[0, 72, 144, 216, 288].map((deg, i) => {
         const rad = (deg * Math.PI) / 180;
-        const x = 200 + 160 * Math.cos(rad);
-        const y = 120 + 50 * Math.sin(rad);
+        const x = Math.round((200 + 160 * Math.cos(rad)) * 100) / 100;
+        const y = Math.round((120 + 50 * Math.sin(rad)) * 100) / 100;
         return (
           <g key={i}>
             <circle cx={x} cy={y} r="4" fill="currentColor" opacity="0.35" />
@@ -351,84 +351,6 @@ function AuroraBackground({
 }
 
 /* ============================================================
-   Center Axis Line — vertical dashed gradient with nodes
-   ============================================================ */
-function CenterAxisLine({
-  activeIndex,
-  totalCards,
-}: {
-  activeIndex: number | null;
-  totalCards: number;
-}) {
-  return (
-    <div className="absolute left-1/2 top-0 bottom-0 -translate-x-1/2 pointer-events-none hidden lg:block z-0">
-      {/* The dashed gradient line */}
-      <div
-        className="absolute left-0 top-0 bottom-0 w-px"
-        style={{
-          background:
-            "repeating-linear-gradient(to bottom, transparent 0px, rgba(59,130,246,0.15) 4px, rgba(59,130,246,0.15) 8px, transparent 8px, transparent 16px)",
-          maskImage:
-            "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 10%, rgba(0,0,0,0.6) 90%, transparent 100%)",
-          WebkitMaskImage:
-            "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 10%, rgba(0,0,0,0.6) 90%, transparent 100%)",
-        }}
-      />
-
-      {/* Nodes for each card — positioned at equal intervals */}
-      {Array.from({ length: totalCards }).map((_, i) => {
-        const isActive = activeIndex === i;
-        const topPercent = ((i + 0.5) / totalCards) * 100;
-        return (
-          <motion.div
-            key={i}
-            className="absolute left-1/2 -translate-x-1/2"
-            style={{ top: `${topPercent}%` }}
-          >
-            {/* Glow ring */}
-            <motion.div
-              className="absolute -inset-3 rounded-full"
-              animate={{
-                boxShadow: isActive
-                  ? "0 0 20px rgba(59,130,246,0.35), 0 0 6px rgba(59,130,246,0.25)"
-                  : "0 0 0px transparent",
-              }}
-              transition={{ duration: 0.6, ease: "easeInOut" }}
-            />
-            {/* Outer ring */}
-            <motion.div
-              className="w-4 h-4 rounded-full border-2 flex items-center justify-center"
-              animate={{
-                borderColor: isActive
-                  ? "rgba(59,130,246,0.8)"
-                  : "rgba(59,130,246,0.2)",
-                scale: isActive ? 1.2 : 1,
-              }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              style={{ background: "rgba(2,6,23,0.8)" }}
-            >
-              {/* Inner dot */}
-              <motion.div
-                className="w-2 h-2 rounded-full"
-                animate={{
-                  backgroundColor: isActive
-                    ? "rgba(59,130,246,0.9)"
-                    : "rgba(59,130,246,0.15)",
-                  boxShadow: isActive
-                    ? "0 0 8px rgba(59,130,246,0.6)"
-                    : "none",
-                }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-              />
-            </motion.div>
-          </motion.div>
-        );
-      })}
-    </div>
-  );
-}
-
-/* ============================================================
    Metric Badge
    ============================================================ */
 function MetricBadge({ label, value }: { label: string; value: string }) {
@@ -480,173 +402,176 @@ function TagPill({ text }: { text: string }) {
 }
 
 /* ============================================================
-   Zig-Zag Career Card
-   Layout: odd index (0,2) = text LEFT, image RIGHT
-           even index (1,3) = image LEFT, text RIGHT
-   (first item 星网: text left, arch right)
+   Strata Career Card — interlocking "rock layer" layout
+   Cards overlap vertically and shift left/right for a flowing path
    ============================================================ */
-function ZigZagCard({
+
+/** Horizontal offset pattern for desktop: alternating left/right extension */
+const STRATA_OFFSETS = [
+  "lg:mr-[12%] lg:ml-0",        // card 0: extend left
+  "lg:ml-[14%] lg:mr-0",        // card 1: extend right
+  "lg:mr-[10%] lg:ml-[2%]",     // card 2: slight left
+  "lg:ml-[12%] lg:mr-[2%]",     // card 3: slight right
+];
+
+function StrataCard({
   item,
   index,
-  onInView,
 }: {
   item: CareerItem;
   index: number;
-  onInView: (index: number, visible: boolean) => void;
 }) {
   const { t } = useLanguage();
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-  const isActiveView = useInView(ref, { margin: "-40% 0px -40% 0px" });
-
-  useEffect(() => {
-    onInView(index, isActiveView);
-  }, [isActiveView, index, onInView]);
-
-  // index 0,2 → text LEFT, arch RIGHT (text slides from left, arch from right)
-  // index 1,3 → arch LEFT, text RIGHT (arch slides from left, text from right)
-  const textOnLeft = index % 2 === 0;
+  const isInView = useInView(ref, { once: true, margin: "-60px" });
 
   const ArchSvg = archComponents[item.archKey];
+  const textOnLeft = index % 2 === 0;
+  const offsetClass = STRATA_OFFSETS[index] ?? "";
+
+  // Stacking: later cards sit on top of earlier ones (z-index ascending)
+  const zIndex = index + 1;
+
+  // Skew angles for the "geological strata" feel — alternating direction
+  const skewDeg = index % 2 === 0 ? -0.6 : 0.6;
 
   const ease = [0.25, 0.46, 0.45, 0.94] as const;
 
-  const leftVariants = {
-    hidden: { opacity: 0, x: -120 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease } },
+  const slideVariants = {
+    hidden: { opacity: 0, y: 50, x: textOnLeft ? -60 : 60 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      x: 0,
+      transition: { duration: 0.7, ease, delay: index * 0.08 },
+    },
   };
-  const rightVariants = {
-    hidden: { opacity: 0, x: 120 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.8, delay: 0.1, ease } },
-  };
-
-  /* --- Architecture / SVG side (transparent, offset toward center) --- */
-  const archSide = (
-    <motion.div
-      className={`relative w-full lg:w-1/2 hidden lg:flex min-h-[360px] items-center justify-center pointer-events-none ${
-        textOnLeft ? "-ml-8" : "-mr-8"
-      }`}
-      style={{ zIndex: 0 }}
-      variants={textOnLeft ? rightVariants : leftVariants}
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
-    >
-      {/* SVG Architecture Lines — transparent background, higher contrast */}
-      <div className="relative w-full h-full text-slate-500/80 dark:text-white/70 p-2">
-        <ArchSvg />
-      </div>
-    </motion.div>
-  );
-
-  /* --- Text side --- */
-  const textSide = (
-    <motion.div
-      className="w-full lg:w-1/2 flex flex-col justify-center relative"
-      style={{ zIndex: 1 }}
-      variants={textOnLeft ? leftVariants : rightVariants}
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
-    >
-      <div className="career-glass-card rounded-2xl p-6 md:p-8 relative overflow-hidden">
-        {/* Watermark company logo behind text content */}
-        <div
-          className="absolute inset-0 flex items-center justify-center opacity-[0.064] pointer-events-none"
-          style={{ filter: "grayscale(1) brightness(1.2)" }}
-        >
-          <div className="relative w-40 h-40 md:w-56 md:h-56">
-            <Image src={item.logo} alt="" fill className="object-contain" aria-hidden />
-          </div>
-        </div>
-        {/* Noise grain */}
-        <div
-          className="absolute inset-0 opacity-[0.03] pointer-events-none rounded-2xl"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g2)'/%3E%3C/svg%3E")`,
-          }}
-        />
-
-        {/* Header */}
-        <div className="relative flex items-start gap-4">
-          <div className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-xl bg-white/80 dark:bg-white/10 border border-slate-100 dark:border-white/5 flex items-center justify-center overflow-hidden p-1.5 backdrop-blur-sm">
-            <Image
-              src={item.logo}
-              alt={item.company}
-              width={48}
-              height={48}
-              className="object-contain"
-            />
-          </div>
-
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1 flex-wrap">
-              <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-electric-blue/10 text-electric-blue border border-electric-blue/20">
-                {t(item.role, getEn(item.role))}
-              </span>
-              <span className="text-xs font-mono text-slate-400 dark:text-white/30">
-                {item.period.replace("至今", t("至今", "Present"))}
-              </span>
-            </div>
-            <h3 className="text-xl md:text-2xl font-extrabold text-slate-800 dark:text-white tracking-tight">
-              {t(item.company, getEn(item.company))}
-              <span className="text-slate-300 dark:text-white/20 mx-1.5 font-normal">/</span>
-              <span className="text-lg md:text-xl text-slate-500 dark:text-white/50 font-semibold">
-                {t(item.department, getEn(item.department))}
-              </span>
-            </h3>
-          </div>
-        </div>
-
-        {/* Tags */}
-        <div className="relative flex flex-wrap gap-1.5 mt-4">
-          {item.tags.map((tag) => (
-            <TagPill key={tag} text={tag} />
-          ))}
-        </div>
-
-        {/* Highlights with keyword highlighting */}
-        <ul className="relative mt-5 space-y-2.5">
-          {item.highlights.map((h, i) => (
-            <li
-              key={i}
-              className="flex items-start gap-2.5 text-sm text-slate-600 dark:text-white/60 leading-relaxed"
-            >
-              <span className="flex-shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-electric-blue/40" />
-              <span>
-                <HighlightedText text={t(h, getEn(h))} />
-              </span>
-            </li>
-          ))}
-        </ul>
-
-        {/* Metrics */}
-        <div className="relative mt-5 pt-4 border-t border-slate-200/40 dark:border-white/[0.06]">
-          <p className="text-[11px] font-mono text-slate-400 dark:text-white/30 uppercase tracking-widest mb-3">
-            Key Results
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {item.metrics.map((m) => (
-              <MetricBadge key={m.label} label={m.label} value={m.value} />
-            ))}
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  );
 
   return (
-    <div ref={ref} className="relative flex flex-col lg:flex-row items-stretch lg:items-center">
-      {textOnLeft ? (
-        <>
-          {textSide}
-          {archSide}
-        </>
-      ) : (
-        <>
-          {archSide}
-          {textSide}
-        </>
-      )}
-    </div>
+    <motion.div
+      ref={ref}
+      className={`relative ${offsetClass}`}
+      style={{
+        zIndex,
+        // Overlap: pull each card up into the previous one (except the first)
+        marginTop: index === 0 ? 0 : "-28px",
+      }}
+      variants={slideVariants}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+    >
+      {/* Outer wrapper with subtle skew for strata effect — desktop only */}
+      <div
+        className="relative"
+        style={{ transform: `skewY(${skewDeg}deg)` }}
+      >
+        {/* The glass card — counter-skew the content so text stays readable */}
+        <div
+          className="career-glass-card career-strata-card rounded-xl relative overflow-hidden"
+          style={{ transform: `skewY(${-skewDeg}deg)` }}
+        >
+          {/* Noise grain */}
+          <div
+            className="absolute inset-0 opacity-[0.025] pointer-events-none rounded-xl"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g2)'/%3E%3C/svg%3E")`,
+            }}
+          />
+
+          {/* Main content: two-column on desktop */}
+          <div className="relative flex flex-col lg:flex-row items-stretch">
+            {/* ---- Text content column ---- */}
+            <div className={`flex-1 min-w-0 p-4 md:p-5 ${textOnLeft ? "lg:order-1" : "lg:order-2"}`}>
+              {/* Header row: logo + info */}
+              <div className="flex items-center gap-3">
+                <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-white/80 dark:bg-white/10 border border-slate-100 dark:border-white/5 flex items-center justify-center overflow-hidden p-1 backdrop-blur-sm">
+                  <Image
+                    src={item.logo}
+                    alt={item.company}
+                    width={36}
+                    height={36}
+                    className="object-contain"
+                  />
+                </div>
+
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h3 className="text-lg md:text-xl font-extrabold text-slate-800 dark:text-white tracking-tight leading-tight">
+                      {t(item.company, getEn(item.company))}
+                      <span className="text-slate-300 dark:text-white/20 mx-1 font-normal">/</span>
+                      <span className="text-base md:text-lg text-slate-500 dark:text-white/50 font-semibold">
+                        {t(item.department, getEn(item.department))}
+                      </span>
+                    </h3>
+                  </div>
+                  <div className="flex items-center gap-2 mt-0.5">
+                    <span className="text-[11px] font-mono px-1.5 py-px rounded-full bg-electric-blue/10 text-electric-blue border border-electric-blue/20 leading-tight">
+                      {t(item.role, getEn(item.role))}
+                    </span>
+                    <span className="text-[11px] font-mono text-slate-400 dark:text-white/30">
+                      {item.period.replace("至今", t("至今", "Present"))}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Tags — compact inline */}
+              <div className="flex flex-wrap gap-1 mt-2.5">
+                {item.tags.map((tag) => (
+                  <TagPill key={tag} text={tag} />
+                ))}
+              </div>
+
+              {/* Highlights — condensed */}
+              <ul className="mt-2.5 space-y-1">
+                {item.highlights.map((h, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start gap-2 text-[13px] text-slate-600 dark:text-white/60 leading-snug"
+                  >
+                    <span className="flex-shrink-0 w-1 h-1 mt-[7px] rounded-full bg-electric-blue/40" />
+                    <span>
+                      <HighlightedText text={t(h, getEn(h))} />
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Metrics — inline with highlights */}
+              <div className="mt-2.5 pt-2 border-t border-slate-200/30 dark:border-white/[0.05]">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-[10px] font-mono text-slate-400 dark:text-white/25 uppercase tracking-widest mr-1">
+                    Key Results
+                  </span>
+                  {item.metrics.map((m) => (
+                    <MetricBadge key={m.label} label={m.label} value={m.value} />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* ---- Architecture SVG column — desktop only ---- */}
+            <div
+              className={`hidden lg:flex w-[280px] xl:w-[320px] flex-shrink-0 items-center justify-center pointer-events-none ${
+                textOnLeft ? "lg:order-2" : "lg:order-1"
+              }`}
+            >
+              <div className="relative w-full h-full text-slate-500/60 dark:text-white/50 p-2 min-h-[200px]">
+                <ArchSvg />
+              </div>
+            </div>
+          </div>
+
+          {/* Strata edge highlight — a subtle colored line at the bottom */}
+          <div
+            className="absolute bottom-0 left-0 right-0 h-px"
+            style={{
+              background: `linear-gradient(90deg, transparent 0%, rgba(59,130,246,${0.15 + index * 0.05}) 30%, rgba(16,185,129,${0.1 + index * 0.04}) 70%, transparent 100%)`,
+            }}
+          />
+        </div>
+      </div>
+    </motion.div>
   );
 }
 
@@ -656,7 +581,6 @@ function ZigZagCard({
 export default function CareerSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
-  const [activeCardIndex, setActiveCardIndex] = useState<number | null>(null);
   const { config } = useSiteConfig();
   const { t } = useLanguage();
 
@@ -690,14 +614,6 @@ export default function CareerSection() {
     [rawMouseX, rawMouseY]
   );
 
-  const handleCardInView = useCallback((index: number, visible: boolean) => {
-    if (visible) {
-      setActiveCardIndex(index);
-    } else {
-      setActiveCardIndex((prev) => (prev === index ? null : prev));
-    }
-  }, []);
-
   return (
     <section
       ref={sectionRef}
@@ -726,22 +642,15 @@ export default function CareerSection() {
           </p>
         </div>
 
-        {/* Cards container with center axis */}
+        {/* Strata cards — overlapping, offset layout */}
         <div className="relative">
-          {/* Center Axis Line — only on desktop */}
-          <CenterAxisLine activeIndex={activeCardIndex} totalCards={careers.length} />
-
-          {/* Zig-Zag Cards */}
-          <div className="space-y-3 lg:space-y-4">
-            {mergedCareers.map((item, index) => (
-              <ZigZagCard
-                key={`${item.company}-${item.period}`}
-                item={item}
-                index={index}
-                onInView={handleCardInView}
-              />
-            ))}
-          </div>
+          {mergedCareers.map((item, index) => (
+            <StrataCard
+              key={`${item.company}-${item.period}`}
+              item={item}
+              index={index}
+            />
+          ))}
         </div>
       </motion.div>
     </section>

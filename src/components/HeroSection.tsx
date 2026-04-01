@@ -4,16 +4,57 @@ import { motion } from "framer-motion";
 import { useSiteConfig } from "./SiteConfigContext";
 import { useLanguage } from "./LanguageContext";
 
+const cardIcons = [
+  // 全局解题 — crosshair/target icon
+  <svg key="solve" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+    <circle cx="12" cy="12" r="10" />
+    <circle cx="12" cy="12" r="6" />
+    <circle cx="12" cy="12" r="2" />
+    <line x1="12" y1="2" x2="12" y2="6" />
+    <line x1="12" y1="18" x2="12" y2="22" />
+    <line x1="2" y1="12" x2="6" y2="12" />
+    <line x1="18" y1="12" x2="22" y2="12" />
+  </svg>,
+  // 秩序构建 — shield icon
+  <svg key="order" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+    <path d="M12 2l8 4v6c0 5.25-3.5 9.5-8 11-4.5-1.5-8-5.75-8-11V6l8-4z" />
+    <path d="M9 12l2 2 4-4" />
+  </svg>,
+  // 智能跃迁 — lightning/AI icon
+  <svg key="ai" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+  </svg>,
+];
+
+const cardAccents = [
+  "from-electric-blue to-blue-400",   // 全局解题
+  "from-gem-green to-emerald-400",    // 秩序构建
+  "from-violet-500 to-purple-400",    // 智能跃迁
+];
+
+interface HeroTag {
+  title: string;
+  desc: string;
+}
+
+const heroTags: HeroTag[] = [
+  { title: "全局解题", desc: "从单点问题突破，到持续交付系统级的商业价值。" },
+  { title: "秩序构建", desc: "以严谨的风控模型与流程体系，筑牢业务的安全边界。" },
+  { title: "智能跃迁", desc: "将AI深度融入组织肌理，引领业务范式的效率变革。" },
+];
+
+const heroTagsEn: HeroTag[] = [
+  { title: "Holistic Problem-Solving", desc: "From point breakthroughs to delivering systemic business value." },
+  { title: "Order Architecture", desc: "Building secure business boundaries with rigorous risk models and process systems." },
+  { title: "Intelligent Leap", desc: "Deeply embedding AI into organizational fabric to drive paradigm-shifting efficiency." },
+];
+
 export default function HeroSection() {
   const { config } = useSiteConfig();
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
   const hero = config.hero;
+  const tags = locale === "zh" ? heroTags : heroTagsEn;
 
-  const tagTranslations: Record<string, string> = {
-    "解决问题，持续交付用户价值": "Solve problems, deliver user value",
-    "建立风控模型和流程体系": "Build risk control models and process systems",
-    "AI赋能组织提效业务变革": "AI-powered organizational efficiency",
-  };
   return (
     <section id="hero" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
       {/* Subtle radial glow behind name */}
@@ -22,7 +63,7 @@ export default function HeroSection() {
       </div>
 
       <motion.div
-        className="relative z-10 text-center"
+        className="relative z-10 text-center w-full max-w-5xl mx-auto px-4"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -52,7 +93,7 @@ export default function HeroSection() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 1.0 }}
         >
-          {t(hero.title, "AI-Empowered Platform Product Manager")}
+          {t(hero.title, "Platform Product Expert in the AI Era")}
         </motion.p>
 
         {/* Subtitle - 知行合一 */}
@@ -65,22 +106,39 @@ export default function HeroSection() {
           {t(hero.motto, "Unity of Knowledge and Action")}
         </motion.p>
 
-        {/* Tags */}
+        {/* Three Core Value Cards */}
         <motion.div
-          className="mt-8 flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4 text-sm text-slate-400 dark:text-white/50 font-mono"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.6 }}
         >
-          {hero.tags.map((tag, i) => (
-            <span key={i}>
-              {i > 0 && (
-                <span className="hidden md:inline text-slate-300 dark:text-white/20">·</span>
-              )}
-              <span className="px-3 py-1 border border-slate-200 dark:border-white/10 rounded-full">
-                {t(tag, tagTranslations[tag] || tag)}
-              </span>
-            </span>
+          {tags.map((tag, i) => (
+            <motion.div
+              key={i}
+              className="hero-value-card group relative rounded-2xl p-5 md:p-6 text-left"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.8 + i * 0.15, ease: "easeOut" }}
+            >
+              {/* Top accent line */}
+              <div className={`absolute top-0 left-6 right-6 h-px bg-gradient-to-r ${cardAccents[i]} opacity-40 group-hover:opacity-80 transition-opacity duration-500`} />
+
+              {/* Icon */}
+              <div className={`mb-3 w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br ${cardAccents[i]} text-white/90 shadow-lg`}>
+                {cardIcons[i]}
+              </div>
+
+              {/* Title */}
+              <h3 className="text-base md:text-lg font-semibold text-slate-800 dark:text-white/90 tracking-wide mb-2">
+                {tag.title}
+              </h3>
+
+              {/* Description */}
+              <p className="text-sm text-slate-500 dark:text-white/50 leading-relaxed font-light">
+                {tag.desc}
+              </p>
+            </motion.div>
           ))}
         </motion.div>
       </motion.div>
@@ -90,7 +148,7 @@ export default function HeroSection() {
         className="absolute bottom-12 left-1/2 -translate-x-1/2"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2.5 }}
+        transition={{ delay: 2.8 }}
       >
         <motion.div
           className="w-5 h-8 border border-slate-300 dark:border-white/20 rounded-full flex justify-center"

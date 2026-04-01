@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { motion, AnimatePresence, useInView, useMotionValue, useTransform } from "framer-motion";
+import { useRef } from "react";
+import { motion, useInView, useMotionValue, useTransform } from "framer-motion";
 import { useLanguage } from "./LanguageContext";
 import { getEn } from "@/i18n/translations";
 
@@ -21,48 +21,48 @@ interface Methodology {
 
 const methodologies: Methodology[] = [
   {
-    id: "communicate",
-    titleZh: "设计的前提是充分沟通和调研",
-    titleEn: "Align People, Align Design",
-    icon: "communicate",
-    accent: "blue",
-    accentRgb: "59,130,246",
-    caseStudy:
-      "面对长流程、跨部门的系统设计，要充分了解各个部门、各个角色的个人诉求和组织诉求。在阿里云分销系统构建中，只有系统给每个角色都提供了价值，系统才可以推广出去，才能真正用起来。当阻力较大时，局部培养志愿者和标杆团队，再口碑推广是一个很好的办法。",
-    keywords: ["沟通", "调研", "共识", "推广"],
-  },
-  {
-    id: "deconstruct",
-    titleZh: "用简单的界面，解构复杂的业务",
-    titleEn: "Simple Surface, Complex Core",
-    icon: "deconstruct",
-    accent: "emerald",
-    accentRgb: "16,185,129",
-    caseStudy:
-      "B端页面要清晰易用，逻辑清晰，板块分明。但在流程上要承载住复杂的业务。在阿里云分销系统构建中，坚持要点提前、风险点强调、变化点可追溯的设计原则。珍惜重视用户的注意力和焦点，有的放矢。",
-    keywords: ["简洁", "逻辑", "聚焦", "追溯"],
-  },
-  {
-    id: "resilience",
-    titleZh: "流程要有自驱性，也要有健壮性",
-    titleEn: "Self-Driven & Resilient Flow",
-    icon: "resilience",
-    accent: "violet",
-    accentRgb: "139,92,246",
-    caseStudy:
-      "自驱型就是流程要有关心他的人，推动流程审批。无论是主动的还是被动的，需要进行合理的编排。流程在驳回时，要尽量保留可以复用的信息。如果所有流程因为一个节点被驳回就要从头再来，损失的不但是组织的效率、客户的体验，也是用户的积极性。",
-    keywords: ["自驱", "编排", "容错", "复用"],
-  },
-  {
     id: "mvp",
-    titleZh: "需求会很多，但好钢要用在刀刃上",
-    titleEn: "Focus on What Truly Matters",
+    titleZh: "战略与优先级：需求繁杂，但好钢必须用在刀刃上",
+    titleEn: "Strategy & Prioritization",
     icon: "mvp",
     accent: "amber",
     accentRgb: "245,158,11",
     caseStudy:
-      "要在资源有限、人力有限、时间有限的项目中，面对可能模糊的需求，探索MVP，以各方的最大公约数驱动项目演进。在宏观协调的同时，以点带面，挖掘业务和业务参与者层层掩盖下的最真实的需求。以数据和逻辑推动项目的整体完善。",
+      "在资源、人力和时间高度受限的项目中，**B端产品经理的核心价值在于管理不确定性**。面对模糊且海量的诉求，我主张以 **MVP（最小可行性产品）** 快速切入，寻找各方利益的\u201c最大公约数\u201d来驱动项目敏捷演进。在宏观统筹的同时，以点带面，层层剥离表象，**挖掘出业务参与者最底层的真实诉求**，以数据和严密的逻辑推动项目的整体完善。",
     keywords: ["MVP", "聚焦", "数据驱动", "最大公约数"],
+  },
+  {
+    id: "communicate",
+    titleZh: "组织与变革：超越单纯的功能交付，用\u201c利益对齐\u201d化解落地阻力",
+    titleEn: "Organization & Change Management",
+    icon: "communicate",
+    accent: "blue",
+    accentRgb: "59,130,246",
+    caseStudy:
+      "**B端系统的上线，本质上是一场组织管理变革。** 面对长流程、跨部门的复杂系统设计，核心不在于画出多完美的流程图，而在于**敏锐捕捉各部门、各角色的个人诉求与组织诉求**。在构建复杂系统（如阿里云分销系统）时，唯有系统能为链条上的每一个角色提供可感知的价值，系统才能真正\u201c长\u201d在业务上。当面临较大的惯性阻力时，采用**\u201c局部培养志愿者和标杆团队、以点带面形成口碑\u201d**的策略，往往比强行推行更具穿透力。",
+    keywords: ["沟通", "调研", "共识", "推广"],
+  },
+  {
+    id: "deconstruct",
+    titleZh: "架构与降维：以克制的信息架构，为极度复杂的业务进行\u201c认知降维\u201d",
+    titleEn: "Architecture & Cognitive Simplification",
+    icon: "deconstruct",
+    accent: "emerald",
+    accentRgb: "16,185,129",
+    caseStudy:
+      "B端业务往往天然复杂，**产品经理的价值在于用确定性的系统框架去解构不确定性的业务**。界面的清晰易用，背后是深厚的业务抽象能力。在复杂系统的构建中，应坚持**\u201c要点前置、风险强控、变更可溯\u201d**的设计原则。我们不仅要珍惜用户的物理点击，更要**珍惜用户的注意力与认知带宽**。通过合理的信息分层和架构编排，让用户在处理复杂业务时依然能聚焦核心，有的放矢。",
+    keywords: ["简洁", "逻辑", "聚焦", "追溯"],
+  },
+  {
+    id: "resilience",
+    titleZh: "机制与演进：流程设计要兼顾\u201c正向价值驱动\u201d与\u201c高阶容错弹性\u201d",
+    titleEn: "Mechanism & Evolution",
+    icon: "resilience",
+    accent: "violet",
+    accentRgb: "139,92,246",
+    caseStudy:
+      "优秀的B端流程不应是死板的行政枷锁，而应具备**自驱性和鲁棒性（健壮性）**。自驱性意味着流程设计要能给推进者提供正向反馈或明确的责任锚定，让流程\u201c自己跑起来\u201d；鲁棒性则体现在对异常和挫折的处理上。如果一个长流程因为末端的一个节点被驳回就必须从头再来，这不仅是对组织效率和客户体验的巨大损耗，更是在扼杀用户对系统的信任感。**流程应当具备\u201c状态保留\u201d和\u201c断点续传\u201d的弹性**，在严谨与效率之间找到最佳平衡。",
+    keywords: ["自驱", "编排", "容错", "复用"],
   },
 ];
 
@@ -206,28 +206,42 @@ function MethodologyIcon({ type, accent }: { type: string; accent: string }) {
 }
 
 /* ────────────────────────────────────────────
-   Expanding Card with "Prism Reveal" animation
+   Render text with **bold** markdown support
+   ──────────────────────────────────────────── */
+function RichText({ text, className }: { text: string; className?: string }) {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return (
+    <p className={className}>
+      {parts.map((part, i) =>
+        part.startsWith("**") && part.endsWith("**") ? (
+          <strong key={i} className="font-semibold text-slate-800 dark:text-white/90">
+            {part.slice(2, -2)}
+          </strong>
+        ) : (
+          <span key={i}>{part}</span>
+        )
+      )}
+    </p>
+  );
+}
+
+/* ────────────────────────────────────────────
+   Card with always-visible description
    ──────────────────────────────────────────── */
 function MethodologyCard({
   item,
   index,
-  isExpanded,
-  onHoverStart,
-  onHoverEnd,
 }: {
   item: Methodology;
   index: number;
-  isExpanded: boolean;
-  onHoverStart: () => void;
-  onHoverEnd: () => void;
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const { t } = useLanguage();
   const isInView = useInView(cardRef, { once: true, margin: "-80px" });
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const rotateX = useTransform(mouseY, [-0.5, 0.5], [3, -3]);
-  const rotateY = useTransform(mouseX, [-0.5, 0.5], [-3, 3]);
+  const rotateX = useTransform(mouseY, [-0.5, 0.5], [2, -2]);
+  const rotateY = useTransform(mouseX, [-0.5, 0.5], [-2, 2]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -238,7 +252,6 @@ function MethodologyCard({
   const handleMouseLeave = () => {
     mouseX.set(0);
     mouseY.set(0);
-    onHoverEnd();
   };
 
   const borderMap: Record<string, string> = {
@@ -264,9 +277,7 @@ function MethodologyCard({
     >
       <motion.div
         onMouseMove={handleMouseMove}
-        onMouseEnter={onHoverStart}
         onMouseLeave={handleMouseLeave}
-        onClick={() => { if (isExpanded) onHoverEnd(); else onHoverStart(); }}
         style={{
           rotateX,
           rotateY,
@@ -274,12 +285,12 @@ function MethodologyCard({
         }}
         className={`
           group relative methodology-card rounded-2xl overflow-hidden
-          transition-all duration-500 cursor-none
+          transition-all duration-500
           ${borderMap[item.accent]}
         `}
         data-magnetic
       >
-        {/* Subtle left accent bar instead of full card border */}
+        {/* Subtle left accent bar */}
         <div
           className="absolute top-2 bottom-2 left-0 w-[2px] rounded-full"
           style={{
@@ -287,11 +298,11 @@ function MethodologyCard({
           }}
         />
 
-        <div className="relative z-10 p-6 md:p-8">
-          {/* Header row */}
-          <div className="flex items-start gap-5 mb-6">
+        <div className="relative z-10 p-5 md:p-7">
+          {/* Header: icon + title area (full width) */}
+          <div className="flex items-start gap-4 mb-4">
             {/* Icon */}
-            <div className="w-14 h-14 md:w-16 md:h-16 flex-shrink-0 relative">
+            <div className="w-11 h-11 md:w-14 md:h-14 flex-shrink-0 relative">
               <div
                 className="absolute inset-0 rounded-xl opacity-20"
                 style={{
@@ -301,34 +312,51 @@ function MethodologyCard({
               <MethodologyIcon type={item.icon} accent={item.accent} />
             </div>
 
-            <div className="flex-1 min-w-0">
+            <div className="flex-1 min-w-0 pt-0.5">
               {/* Index number */}
               <span
-                className="text-[10px] font-mono tracking-[0.3em] uppercase mb-2 block"
+                className="text-[10px] font-mono tracking-[0.3em] uppercase mb-1.5 block"
                 style={{ color: `rgba(${item.accentRgb}, 0.6)` }}
               >
                 Methodology {numStr}
               </span>
 
-              {/* Chinese title — artistic typography */}
-              <h3 className="text-lg md:text-xl font-extrabold tracking-wide leading-tight text-slate-900 dark:text-white mb-1.5">
+              {/* Title — allow wrapping fully */}
+              <h3 className="text-base md:text-lg font-bold tracking-wide leading-snug text-slate-900 dark:text-white mb-1">
                 <span className="methodology-title-text">
                   {t(item.titleZh, getEn(item.titleZh))}
                 </span>
               </h3>
 
-              {/* English subtitle — italic serif feel */}
+              {/* English subtitle */}
               <p
-                className="text-xs md:text-sm font-light italic tracking-wider"
-                style={{ color: `rgba(${item.accentRgb}, 0.7)` }}
+                className="text-[11px] md:text-xs font-light italic tracking-wider"
+                style={{ color: `rgba(${item.accentRgb}, 0.65)` }}
               >
                 — {item.titleEn}
               </p>
             </div>
           </div>
 
+          {/* Description — always visible, full width */}
+          <div className="flex gap-3 mb-4 ml-0 md:ml-[4.5rem]">
+            {/* Vertical accent bar */}
+            <div
+              className="w-[2px] flex-shrink-0 rounded-full hidden md:block"
+              style={{
+                background: `linear-gradient(180deg, rgba(${item.accentRgb}, 0.4), rgba(${item.accentRgb}, 0.03))`,
+              }}
+            />
+            <div className="flex-1">
+              <RichText
+                text={t(item.caseStudy, getEn(item.caseStudy))}
+                className="text-[13px] md:text-sm leading-[1.85] text-slate-500 dark:text-slate-400/85 font-light"
+              />
+            </div>
+          </div>
+
           {/* Keywords as floating pills */}
-          <div className="flex flex-wrap gap-2 mb-5">
+          <div className="flex flex-wrap gap-2 ml-0 md:ml-[4.5rem]">
             {item.keywords.map((kw, ki) => (
               <motion.span
                 key={kw}
@@ -346,85 +374,6 @@ function MethodologyCard({
               </motion.span>
             ))}
           </div>
-
-          {/* Hover hint */}
-          <div
-            className={`flex items-center gap-2 text-xs font-mono tracking-wider transition-all duration-300 ${isExpanded ? "opacity-0 h-0" : "opacity-100"}`}
-            style={{ color: `rgba(${item.accentRgb}, 0.4)` }}
-          >
-            <span className="hidden md:inline">HOVER TO EXPLORE</span>
-            <span className="md:hidden">TAP TO EXPLORE</span>
-            <motion.svg
-              width="14"
-              height="14"
-              viewBox="0 0 14 14"
-              fill="none"
-              animate={{ rotate: isExpanded ? 180 : 0 }}
-              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-            >
-              <path
-                d="M3 5.5L7 9.5L11 5.5"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </motion.svg>
-          </div>
-
-          {/* Expandable case study — "Prism Reveal" */}
-          <AnimatePresence>
-            {isExpanded && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{
-                  height: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
-                  opacity: { duration: 0.4, delay: 0.1 },
-                }}
-                className="overflow-hidden"
-              >
-                <div className="pt-5 mt-5 relative">
-                  {/* Separator line with glow */}
-                  <div
-                    className="absolute top-0 left-0 right-0 h-px"
-                    style={{
-                      background: `linear-gradient(90deg, transparent, rgba(${item.accentRgb}, 0.3), transparent)`,
-                    }}
-                  />
-
-                  {/* Case study content with typing reveal effect */}
-                  <div className="flex gap-4">
-                    {/* Vertical accent bar */}
-                    <div
-                      className="w-[2px] flex-shrink-0 rounded-full"
-                      style={{
-                        background: `linear-gradient(180deg, rgba(${item.accentRgb}, 0.5), rgba(${item.accentRgb}, 0.05))`,
-                      }}
-                    />
-
-                    <div className="flex-1">
-                      <span
-                        className="text-[10px] font-mono tracking-[0.25em] uppercase block mb-3"
-                        style={{ color: `rgba(${item.accentRgb}, 0.5)` }}
-                      >
-                        Case Study — Alibaba Cloud
-                      </span>
-                      <motion.p
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2, duration: 0.5 }}
-                        className="text-sm md:text-base leading-relaxed text-slate-600 dark:text-slate-300/80 font-light"
-                      >
-                        {t(item.caseStudy, getEn(item.caseStudy))}
-                      </motion.p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
 
         {/* Bottom glow edge */}
@@ -796,8 +745,6 @@ function WatermarkBg() {
    Main Section
    ──────────────────────────────────────────── */
 export default function MethodologySection() {
-  const [expandedId, setExpandedId] = useState<string | null>(null);
-
   return (
     <section
       id="methodology"
@@ -815,9 +762,6 @@ export default function MethodologySection() {
             key={m.id}
             item={m}
             index={i}
-            isExpanded={expandedId === m.id}
-            onHoverStart={() => setExpandedId(m.id)}
-            onHoverEnd={() => setExpandedId(null)}
           />
         ))}
       </div>

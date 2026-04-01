@@ -226,6 +226,52 @@ html:not(.dark) ::selection {
 }
 
 /* ===== Career Glass Cards ===== */
+/* Strata card overrides — tighter, interlocking feel */
+html.dark .career-strata-card {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(200, 210, 230, 0.1);
+  backdrop-filter: blur(24px) saturate(1.3);
+  -webkit-backdrop-filter: blur(24px) saturate(1.3);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 4px 20px rgba(0, 0, 0, 0.35),
+    0 -2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html.dark .career-strata-card:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(59, 130, 246, 0.2);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 8px 32px rgba(59, 130, 246, 0.1),
+    0 0 0 1px rgba(59, 130, 246, 0.08),
+    0 -2px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+html:not(.dark) .career-strata-card {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    0 2px 10px rgba(15, 23, 42, 0.05),
+    0 -1px 4px rgba(15, 23, 42, 0.02);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html:not(.dark) .career-strata-card:hover {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(59, 130, 246, 0.22);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 6px 24px rgba(59, 130, 246, 0.07),
+    0 -1px 4px rgba(15, 23, 42, 0.02);
+  transform: translateY(-1px);
+}
+
 html.dark .career-glass-card {
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(200, 210, 230, 0.08);
@@ -368,6 +414,28 @@ html:not(.dark) .demo-btn-primary:hover {
 }
 
 /* ===== Career Journey Cards ===== */
+
+/* Pipeline stage cards */
+html.dark .journey-pipeline-stage {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(200, 210, 230, 0.08);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html.dark .journey-pipeline-stage:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+html:not(.dark) .journey-pipeline-stage {
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html:not(.dark) .journey-pipeline-stage:hover {
+  background: rgba(255, 255, 255, 0.75);
+}
+
 html.dark .journey-card {
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(200, 210, 230, 0.08);
@@ -752,6 +820,48 @@ html:not(.dark) .methodology-blog-link:hover {
     0 12px 30px rgba(59, 130, 246, 0.06);
 }
 
+/* ===== Hero Value Cards ===== */
+html.dark .hero-value-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(200, 210, 230, 0.08);
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 4px 24px rgba(0, 0, 0, 0.3);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html.dark .hero-value-card:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(200, 210, 230, 0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 12px 48px rgba(59, 130, 246, 0.1),
+    0 0 0 1px rgba(59, 130, 246, 0.06);
+  transform: translateY(-4px);
+}
+
+html:not(.dark) .hero-value-card {
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  backdrop-filter: blur(20px) saturate(1.3);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 2px 12px rgba(15, 23, 42, 0.04);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html:not(.dark) .hero-value-card:hover {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(59, 130, 246, 0.2);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 12px 36px rgba(59, 130, 246, 0.08);
+  transform: translateY(-4px);
+}
+
 /* ===== Hobbies Section ===== */
 /* Hobby icon card */
 html.dark .hobby-card {
@@ -843,7 +953,9 @@ html:not(.dark) .hobby-player {
   }
 
   html.dark .career-glass-card:hover,
-  html:not(.dark) .career-glass-card:hover {
+  html:not(.dark) .career-glass-card:hover,
+  html.dark .career-strata-card:hover,
+  html:not(.dark) .career-strata-card:hover {
     transform: none;
   }
 
@@ -877,6 +989,11 @@ html:not(.dark) .hobby-player {
     transform: none;
   }
 
+  html.dark .hero-value-card:hover,
+  html:not(.dark) .hero-value-card:hover {
+    transform: none;
+  }
+
   /* Disable cert thumbnail perspective hover on mobile */
   .cert-card:hover .cert-thumb-frame {
     transform: none;
@@ -892,11 +1009,13 @@ html:not(.dark) .hobby-player {
 
   /* Reduce backdrop-filter intensity for mobile performance */
   .career-glass-card,
+  .career-strata-card,
   .project-card,
   .journey-card,
   .cert-card,
   .hobby-feature-card,
-  .methodology-blog-link {
+  .methodology-blog-link,
+  .hero-value-card {
     backdrop-filter: blur(12px) saturate(1.1);
     -webkit-backdrop-filter: blur(12px) saturate(1.1);
   }

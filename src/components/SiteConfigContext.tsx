@@ -79,12 +79,12 @@ interface SiteConfigContextValue {
 export const defaultConfig: SiteConfig = {
   hero: {
     name: "Maxwell Ma",
-    title: "AI赋能的平台产品经理",
+    title: "AI时代的平台产品专家",
     motto: "知行合一",
     tags: [
-      "解决问题，持续交付用户价值",
-      "建立风控模型和流程体系",
-      "AI赋能组织提效业务变革",
+      "全局解题｜从单点问题突破，到持续交付系统级的商业价值。",
+      "秩序构建｜以严谨的风控模型与流程体系，筑牢业务的安全边界。",
+      "智能跃迁｜将AI深度融入组织肌理，引领业务范式的效率变革。",
     ],
   },
   education: [

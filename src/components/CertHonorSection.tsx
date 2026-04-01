@@ -182,8 +182,8 @@ function RosetteRibbon({
       {/* Outer rosette petals */}
       {Array.from({ length: 12 }).map((_, i) => {
         const angle = (i * 30 * Math.PI) / 180;
-        const cx = 28 + Math.cos(angle) * 18;
-        const cy = 24 + Math.sin(angle) * 18;
+        const cx = Math.round((28 + Math.cos(angle) * 18) * 100) / 100;
+        const cy = Math.round((24 + Math.sin(angle) * 18) * 100) / 100;
         return (
           <circle
             key={i}
