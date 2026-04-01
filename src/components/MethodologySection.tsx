@@ -53,18 +53,30 @@ const methodologies: Methodology[] = [
       "自驱型就是流程要有关心他的人，推动流程审批。无论是主动的还是被动的，需要进行合理的编排。流程在驳回时，要尽量保留可以复用的信息。如果所有流程因为一个节点被驳回就要从头再来，损失的不但是组织的效率、客户的体验，也是用户的积极性。",
     keywords: ["自驱", "编排", "容错", "复用"],
   },
+  {
+    id: "mvp",
+    titleZh: "需求会很多，但好钢要用在刀刃上",
+    titleEn: "Focus on What Truly Matters",
+    icon: "mvp",
+    accent: "amber",
+    accentRgb: "245,158,11",
+    caseStudy:
+      "要在资源有限、人力有限、时间有限的项目中，面对可能模糊的需求，探索MVP，以各方的最大公约数驱动项目演进。在宏观协调的同时，以点带面，挖掘业务和业务参与者层层掩盖下的最真实的需求。以数据和逻辑推动项目的整体完善。",
+    keywords: ["MVP", "聚焦", "数据驱动", "最大公约数"],
+  },
 ];
 
 /* ────────────────────────────────────────────
    Decorative SVG Icons
    ──────────────────────────────────────────── */
 function MethodologyIcon({ type, accent }: { type: string; accent: string }) {
-  const color =
-    accent === "blue"
-      ? "#3B82F6"
-      : accent === "emerald"
-        ? "#10B981"
-        : "#8B5CF6";
+  const colorMap: Record<string, string> = {
+    blue: "#3B82F6",
+    emerald: "#10B981",
+    violet: "#8B5CF6",
+    amber: "#F59E0B",
+  };
+  const color = colorMap[accent] || "#8B5CF6";
 
   if (type === "communicate") {
     return (
@@ -102,6 +114,37 @@ function MethodologyIcon({ type, accent }: { type: string; accent: string }) {
           <animate attributeName="fillOpacity" values="0.1;0.25;0.1" dur="2.5s" repeatCount="indefinite" />
         </path>
         <circle cx="32" cy="32" r="2.5" fill={color} opacity="0.7" />
+      </svg>
+    );
+  }
+
+  if (type === "mvp") {
+    return (
+      <svg viewBox="0 0 64 64" fill="none" className="w-full h-full">
+        {/* Diamond / prism — focus, precision */}
+        <path
+          d="M32 6 L54 24 L32 58 L10 24 Z"
+          stroke={color}
+          strokeWidth="1.5"
+          fill={color}
+          fillOpacity="0.08"
+        >
+          <animate attributeName="fillOpacity" values="0.06;0.15;0.06" dur="3s" repeatCount="indefinite" />
+        </path>
+        {/* Facet lines */}
+        <line x1="32" y1="6" x2="32" y2="58" stroke={color} strokeWidth="0.8" opacity="0.25" />
+        <line x1="10" y1="24" x2="54" y2="24" stroke={color} strokeWidth="0.8" opacity="0.25" />
+        <line x1="10" y1="24" x2="32" y2="58" stroke={color} strokeWidth="0.8" opacity="0.15" />
+        <line x1="54" y1="24" x2="32" y2="58" stroke={color} strokeWidth="0.8" opacity="0.15" />
+        {/* Inner focus point */}
+        <circle cx="32" cy="28" r="6" stroke={color} strokeWidth="1" fill={color} fillOpacity="0.15">
+          <animate attributeName="r" values="5;7;5" dur="2.5s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="32" cy="28" r="2.5" fill={color} opacity="0.7" />
+        {/* Radiating lines from focus — precision */}
+        <line x1="32" y1="22" x2="32" y2="14" stroke={color} strokeWidth="0.6" opacity="0.3" />
+        <line x1="38" y1="26" x2="44" y2="22" stroke={color} strokeWidth="0.6" opacity="0.3" />
+        <line x1="26" y1="26" x2="20" y2="22" stroke={color} strokeWidth="0.6" opacity="0.3" />
       </svg>
     );
   }
@@ -202,6 +245,7 @@ function MethodologyCard({
     blue: "hover:border-blue-500/30 dark:hover:border-blue-400/25",
     emerald: "hover:border-emerald-500/30 dark:hover:border-emerald-400/25",
     violet: "hover:border-violet-500/30 dark:hover:border-violet-400/25",
+    amber: "hover:border-amber-500/30 dark:hover:border-amber-400/25",
   };
 
   const numStr = String(index + 1).padStart(2, "0");

@@ -271,20 +271,16 @@ function FilterPill({
   onClick: () => void;
 }) {
   const { t } = useLanguage();
-  const colorMap: Record<string, string> = {
-    amber: "bg-amber-500/20 text-amber-400 border-amber-500/30",
-    "electric-blue": "bg-blue-500/20 text-blue-400 border-blue-500/30",
-    "gem-green": "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
-    purple: "bg-purple-500/20 text-purple-400 border-purple-500/30",
-    all: "bg-white/10 text-white/60 border-white/20",
-  };
-
-  const lightColorMap: Record<string, string> = {
-    amber: "bg-amber-50 text-amber-700 border-amber-200",
-    "electric-blue": "bg-blue-50 text-blue-700 border-blue-200",
-    "gem-green": "bg-emerald-50 text-emerald-700 border-emerald-200",
-    purple: "bg-purple-50 text-purple-700 border-purple-200",
-    all: "bg-slate-100 text-slate-600 border-slate-200",
+  const activeClasses: Record<string, string> = {
+    amber:
+      "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-500/20 dark:text-amber-400 dark:border-amber-500/30",
+    "electric-blue":
+      "bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-500/20 dark:text-blue-400 dark:border-blue-500/30",
+    "gem-green":
+      "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-500/20 dark:text-emerald-400 dark:border-emerald-500/30",
+    purple:
+      "bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-500/20 dark:text-purple-400 dark:border-purple-500/30",
+    all: "bg-slate-100 text-slate-600 border-slate-300 dark:bg-white/10 dark:text-white/60 dark:border-white/20",
   };
 
   return (
@@ -295,8 +291,8 @@ function FilterPill({
         px-4 py-1.5 rounded-full text-xs font-mono tracking-wider border transition-all duration-300
         ${
           active
-            ? `${colorMap[color]} dark:${colorMap[color]} ${lightColorMap[color]} scale-105 shadow-lg`
-            : `border-white/10 text-white/30 dark:border-white/10 dark:text-white/30 border-slate-200 text-slate-400 hover:border-white/20 dark:hover:border-white/20 hover:text-white/50 dark:hover:text-white/50`
+            ? `${activeClasses[color]} scale-105 shadow-lg`
+            : `border-slate-200 text-slate-500 hover:border-slate-300 hover:text-slate-700 dark:border-white/10 dark:text-white/30 dark:hover:border-white/20 dark:hover:text-white/50`
         }
       `}
     >

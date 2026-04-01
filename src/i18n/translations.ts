@@ -319,6 +319,12 @@ const zh2en: Record<string, string> = {
   "编排": "Orchestration",
   "容错": "Fault Tolerance",
   "复用": "Reuse",
+  "需求会很多，但好钢要用在刀刃上": "Demands are many, but sharpen the blade where it counts",
+  "要在资源有限、人力有限、时间有限的项目中，面对可能模糊的需求，探索MVP，以各方的最大公约数驱动项目演进。在宏观协调的同时，以点带面，挖掘业务和业务参与者层层掩盖下的最真实的需求。以数据和逻辑推动项目的整体完善。":
+    "In projects with limited resources, manpower and time, explore the MVP amid ambiguous requirements. Drive evolution through the greatest common denominator of all stakeholders. While coordinating the big picture, dig beneath layers of business processes and participants to uncover the truest needs. Let data and logic drive holistic improvement.",
+  "MVP": "MVP",
+  "数据驱动": "Data-Driven",
+  "最大公约数": "Common Ground",
   "漫谈产品经理和软件工程": "On Product Management & Software Engineering",
 
   /* ── Hobbies Section ── */
