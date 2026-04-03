@@ -4,49 +4,21 @@ import { motion } from "framer-motion";
 import { useSiteConfig } from "./SiteConfigContext";
 import { useLanguage } from "./LanguageContext";
 
-const cardIcons = [
-  // 全局解题 — crosshair/target icon
-  <svg key="solve" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
-    <circle cx="12" cy="12" r="10" />
-    <circle cx="12" cy="12" r="6" />
-    <circle cx="12" cy="12" r="2" />
-    <line x1="12" y1="2" x2="12" y2="6" />
-    <line x1="12" y1="18" x2="12" y2="22" />
-    <line x1="2" y1="12" x2="6" y2="12" />
-    <line x1="18" y1="12" x2="22" y2="12" />
-  </svg>,
-  // 秩序构建 — shield icon
-  <svg key="order" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
-    <path d="M12 2l8 4v6c0 5.25-3.5 9.5-8 11-4.5-1.5-8-5.75-8-11V6l8-4z" />
-    <path d="M9 12l2 2 4-4" />
-  </svg>,
-  // 智能跃迁 — lightning/AI icon
-  <svg key="ai" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
-    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-  </svg>,
-];
-
-const cardAccents = [
-  "from-electric-blue to-blue-400",   // 全局解题
-  "from-gem-green to-emerald-400",    // 秩序构建
-  "from-violet-500 to-purple-400",    // 智能跃迁
-];
-
 interface HeroTag {
   title: string;
   desc: string;
 }
 
 const heroTags: HeroTag[] = [
-  { title: "全局解题", desc: "从单点问题突破，到持续交付系统级的商业价值。" },
-  { title: "秩序构建", desc: "以严谨的风控模型与流程体系，筑牢业务的安全边界。" },
-  { title: "智能跃迁", desc: "将AI深度融入组织肌理，引领业务范式的效率变革。" },
+  { title: "全局解题", desc: "从一个具体问题出发，交付的是背后那套系统级的解决方案。" },
+  { title: "秩序构建", desc: "风控模型与流程体系，是业务高速运转的安全底座。" },
+  { title: "智能跃迁", desc: "让AI真正扎进业务流程，改变团队实际的工作方式。" },
 ];
 
 const heroTagsEn: HeroTag[] = [
-  { title: "Holistic Problem-Solving", desc: "From point breakthroughs to delivering systemic business value." },
-  { title: "Order Architecture", desc: "Building secure business boundaries with rigorous risk models and process systems." },
-  { title: "Intelligent Leap", desc: "Deeply embedding AI into organizational fabric to drive paradigm-shifting efficiency." },
+  { title: "Systemic Solutions", desc: "Start with one real problem. Deliver the system behind it." },
+  { title: "Building Order", desc: "Risk models and process frameworks that let the business move fast and stay safe." },
+  { title: "AI in Practice", desc: "Making AI a real part of how teams work — not just a slide in a deck." },
 ];
 
 export default function HeroSection() {
@@ -63,7 +35,7 @@ export default function HeroSection() {
       </div>
 
       <motion.div
-        className="relative z-10 text-center w-full max-w-5xl mx-auto px-4"
+        className="relative z-10 text-center w-full max-w-4xl mx-auto px-4"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -96,7 +68,7 @@ export default function HeroSection() {
           {t(hero.title, "Platform Product Expert in the AI Era")}
         </motion.p>
 
-        {/* Subtitle - 知行合一 */}
+        {/* Motto - 知行合一 */}
         <motion.p
           className="mt-3 text-lg text-electric-blue font-mono tracking-widest"
           initial={{ opacity: 0 }}
@@ -106,36 +78,25 @@ export default function HeroSection() {
           {t(hero.motto, "Unity of Knowledge and Action")}
         </motion.p>
 
-        {/* Three Core Value Cards */}
+        {/* Three Core Values — pure text, no cards */}
         <motion.div
-          className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 1.6 }}
         >
           {tags.map((tag, i) => (
             <motion.div
               key={i}
-              className="hero-value-card group relative rounded-2xl p-5 md:p-6 text-left"
-              initial={{ opacity: 0, y: 20 }}
+              className="text-center"
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.8 + i * 0.15, ease: "easeOut" }}
+              transition={{ duration: 0.6, delay: 1.8 + i * 0.15 }}
             >
-              {/* Top accent line */}
-              <div className={`absolute top-0 left-6 right-6 h-px bg-gradient-to-r ${cardAccents[i]} opacity-40 group-hover:opacity-80 transition-opacity duration-500`} />
-
-              {/* Icon */}
-              <div className={`mb-3 w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br ${cardAccents[i]} text-white/90 shadow-lg`}>
-                {cardIcons[i]}
-              </div>
-
-              {/* Title */}
-              <h3 className="text-base md:text-lg font-semibold text-slate-800 dark:text-white/90 tracking-wide mb-2">
+              <p className="text-base font-medium text-slate-700 dark:text-white/80 tracking-wide">
                 {tag.title}
-              </h3>
-
-              {/* Description */}
-              <p className="text-sm text-slate-500 dark:text-white/50 leading-relaxed font-light">
+              </p>
+              <p className="mt-2 text-sm text-slate-400 dark:text-white/40 leading-relaxed font-light">
                 {tag.desc}
               </p>
             </motion.div>

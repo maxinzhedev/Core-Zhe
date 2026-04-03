@@ -7,12 +7,12 @@ const zh2en: Record<string, string> = {
   /* ── Hero ── */
   "AI时代的平台产品专家": "Platform Product Expert in the AI Era",
   "知行合一": "Unity of Knowledge and Action",
-  "全局解题": "Holistic Problem-Solving",
-  "从单点问题突破，到持续交付系统级的商业价值。": "From point breakthroughs to delivering systemic business value.",
-  "秩序构建": "Order Architecture",
-  "以严谨的风控模型与流程体系，筑牢业务的安全边界。": "Building secure business boundaries with rigorous risk models and process systems.",
-  "智能跃迁": "Intelligent Leap",
-  "将AI深度融入组织肌理，引领业务范式的效率变革。": "Deeply embedding AI into organizational fabric to drive paradigm-shifting efficiency.",
+  "全局解题": "Systemic Solutions",
+  "从一个具体问题出发，交付的是背后那套系统级的解决方案。": "Start with one real problem. Deliver the system behind it.",
+  "秩序构建": "Building Order",
+  "风控模型与流程体系，是业务高速运转的安全底座。": "Risk models and process frameworks that let the business move fast and stay safe.",
+  "智能跃迁": "AI in Practice",
+  "让AI真正扎进业务流程，改变团队实际的工作方式。": "Making AI a real part of how teams work — not just a slide in a deck.",
 
   /* ── Education Section ── */
   "学习经历": "Education",
